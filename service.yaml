@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: yii2-service
+spec:
+  selector:
+    app: yii2
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort # LoadBalancer # or NodePort if on Minikube

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yii2-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yii2
+  template:
+    metadata:
+      labels:
+        app: yii2
+    spec:
+      containers:
+        - name: yii2
+          image: yii2-basic-app
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          env:
+            - name: DB_HOST
+              value: "mysql-service"
+            - name: DB_NAME
+              value: "game"
+            - name: DB_USER
+              value: "cms"
+            - name: DB_PASS
+              value: "cms"
