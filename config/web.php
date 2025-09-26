@@ -11,6 +11,7 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'name' => 'City Builder CMS',
     'modules' => [
         'user' => [
             'class' => 'app\modules\user\user',
