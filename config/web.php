@@ -15,7 +15,9 @@ $config = [
     'modules' => [
         'user' => [
             'class' => 'app\modules\user\user',
-            // other module-specific config can go here
+        ],
+        'player' => [
+            'class' => 'app\modules\player\player',
         ],
     ],
     'components' => [
