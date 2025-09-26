@@ -42,14 +42,15 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'showScriptName' => false,
+            'showScriptName' => false, // this removes index.php from URLs
+            'enableStrictParsing' => false, // optional
             'rules' => [
+                // your custom URL rules, e.g.:
+                // 'post/<id:\d+>' => 'post/view',
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
