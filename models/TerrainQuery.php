@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[Player]].
+ * This is the ActiveQuery class for [[Terrain]].
  *
- * @see Player
+ * @see Terrain
  */
-class PlayersQuery extends \yii\db\ActiveQuery
+class TerrainQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class PlayersQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Player[]|array
+     * @return Terrain[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class PlayersQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Player|array|null
+     * @return Terrain|array|null
      */
     public function one($db = null)
     {

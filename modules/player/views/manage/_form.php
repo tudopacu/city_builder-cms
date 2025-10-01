@@ -10,7 +10,10 @@ use yii\widgets\ActiveForm;
 
 <div class="player-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin([
+        'enableClientValidation' => true,
+        'enableAjaxValidation' => false, // or true if you want AJAX checks
+    ]); ?>
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 

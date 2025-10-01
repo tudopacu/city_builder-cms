@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use app\modules\user\behaviors\AuthBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\BaseActiveRecord;
@@ -19,7 +18,7 @@ use yii\db\Expression;
  * @property string|null $last_login_at
  * @property string $status
  */
-class Player extends \yii\db\ActiveRecord
+class Player extends CoreModel
 {
 
     /**
@@ -99,11 +98,11 @@ class Player extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return PlayersQuery the active query used by this AR class.
+     * @return PlayerQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new PlayersQuery(get_called_class());
+        return new PlayerQuery(get_called_class());
     }
 
 

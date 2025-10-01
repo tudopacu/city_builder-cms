@@ -19,6 +19,9 @@ $config = [
         'player' => [
             'class' => 'app\modules\player\player',
         ],
+        'map' => [
+            'class' => 'app\modules\map\map',
+        ],
     ],
     'components' => [
         'request' => [

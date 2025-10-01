@@ -4,9 +4,6 @@ namespace app\models;
 
 use app\modules\user\behaviors\AuthBehavior;
 use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\db\BaseActiveRecord;
-use yii\db\Expression;
 
 /**
  * This is the model class for table "users".
@@ -22,7 +19,7 @@ use yii\db\Expression;
  * @property string $created_at
  * @property string $updated_at
  */
-class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
+class User extends CoreModel implements \yii\web\IdentityInterface
 {
     /**
      * {@inheritdoc}
@@ -69,17 +66,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function behaviors()
     {
-        return [
-            [
-                'class' => TimestampBehavior::class,
-                'attributes' => [
-                    BaseActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    BaseActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-                'value' => new Expression('NOW()'),
-            ],
-            AuthBehavior::class,
-        ];
+        $behaviors = parent::behaviors();
+        $behaviors[] = AuthBehavior::class;
+        return $behaviors;
     }
 
     public function beforeSave($insert)
@@ -95,11 +84,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     /**
      * {@inheritdoc}
-     * @return UsersQuery the active query used by this AR class.
+     * @return UserQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new UsersQuery(get_called_class());
+        return new UserQuery(get_called_class());
     }
 
     /**

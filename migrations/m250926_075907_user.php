@@ -18,8 +18,8 @@ class m250926_075907_user extends Migration
             'password' => $this->string()->notNull(),
             'auth_key' => $this->string(32)->notNull(),
             'access_token' => $this->string(32)->notNull(),
-            'created_at' => $this->dateTime()->notNull(),
-            'updated_at' => $this->dateTime()->notNull(),
+            'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
+            'updated_at' => $this->timestamp(),
         ]);
     }
 
