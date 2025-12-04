@@ -14,11 +14,11 @@ class m251122_090228_SEED_map extends Migration
          *  Seed tiles
          * -----------------------------
          */
-        $this->batchInsert('{{%tiles}}', ['type', 'walkable', 'image_url'], [
-            ['grass', 1, '/images/tiles/grass.png'],
-            ['water', 0, '/images/tiles/water.png'],
-            ['dirt', 1, '/images/tiles/dirt.png'],
-            ['road', 1, '/images/tiles/road.png'],
+        $this->batchInsert('{{%tiles}}', ['type', 'image_url'], [
+            ['grass', '/images/tiles/grass.png'],
+            ['water', '/images/tiles/water.png'],
+            ['dirt', '/images/tiles/dirt.png'],
+            ['road', '/images/tiles/road.png'],
         ]);
 
         // Fetch tile IDs for reference
@@ -65,6 +65,10 @@ class m251122_090228_SEED_map extends Migration
         for ($x = 0; $x < $width; $x++) {
             for ($y = 0; $y < $height; $y++) {
 
+                $walkable = true;
+                $setX = rand(1,4);
+                $setY = rand(1,6);
+
                 // Road overrides everything
                 if ($y === $roadY) {
                     $tileType = 'road';
@@ -76,6 +80,7 @@ class m251122_090228_SEED_map extends Migration
 
                     if ($distance > $maxRadius) {
                         $tileType = 'water';  // Sea
+                        $walkable = false;
                     } elseif ($distance < $dirtRadius) {
                         $tileType = 'dirt';   // Dirt center
                     } else {
@@ -88,13 +93,16 @@ class m251122_090228_SEED_map extends Migration
                     'tile_id' => $tileIds[$tileType]['id'],
                     'x' => $x,
                     'y' => $y,
+                    'walkable' => $walkable,
+                    'set_x' => $setX,
+                    'set_y' => $setY
                 ];
             }
         }
 
         // Insert in batches
         foreach (array_chunk($rows, 500) as $chunk) {
-            $this->batchInsert('{{%terrains}}', ['map_id', 'tile_id', 'x', 'y'], $chunk);
+            $this->batchInsert('{{%terrains}}', ['map_id', 'tile_id', 'x', 'y', 'walkable', 'set_x', 'set_y'], $chunk);
         }
     }
 

@@ -12,7 +12,6 @@ class m250926_105844_tile extends Migration
         $this->createTable('{{%tiles}}', [
             'id' => $this->primaryKey(),
             'type' => $this->string()->notNull(),
-            'walkable' => $this->boolean()->notNull()->defaultValue(true),
             'image_url' => $this->string()->null(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
             'updated_at' => $this->timestamp(),

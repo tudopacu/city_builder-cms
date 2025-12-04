@@ -15,6 +15,9 @@ class m250926_112054_terrain extends Migration
             'tile_id' => $this->integer()->notNull(),
             'x' => $this->integer()->notNull(),
             'y' => $this->integer()->notNull(),
+            'walkable' => $this->boolean()->notNull()->defaultValue(true),
+            'set_x' => $this->integer()->notNull(),
+            'set_y' => $this->integer()->notNull(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
             'updated_at' => $this->timestamp(),
         ]);
