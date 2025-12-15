@@ -2,15 +2,16 @@
 
 namespace app\models;
 
+use Yii;
+
 /**
  * This is the model class for table "tiles".
  *
  * @property int $id
  * @property string $type
- * @property int $walkable
  * @property string|null $image_url
- * @property int $created_at
- * @property int $updated_at
+ * @property string|null $created_at
+ * @property string|null $updated_at
  *
  * @property Terrain[] $terrains
  */
@@ -32,10 +33,9 @@ class Tile extends CoreModel
     public function rules()
     {
         return [
-            [['image_url'], 'default', 'value' => null],
+            [['image_url', 'updated_at'], 'default', 'value' => null],
             [['type'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
-            [['walkable'], 'boolean'],
             [['type', 'image_url'], 'string', 'max' => 255],
         ];
     }
@@ -48,7 +48,6 @@ class Tile extends CoreModel
         return [
             'id' => 'ID',
             'type' => 'Type',
-            'walkable' => 'Walkable',
             'image_url' => 'Image Url',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

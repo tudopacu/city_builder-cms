@@ -17,8 +17,8 @@ class TileSearch extends Tile
     public function rules()
     {
         return [
-            [['id', 'walkable', 'created_at', 'updated_at'], 'integer'],
-            [['type', 'image_url'], 'safe'],
+            [['id'], 'integer'],
+            [['type', 'image_url', 'created_at', 'updated_at', 'created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
 
@@ -60,10 +60,21 @@ class TileSearch extends Tile
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'walkable' => $this->walkable,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
+
+        if (!empty($this->created_at_range)) {
+            [$start, $end] = explode(' - ', $this->created_at_range);
+            $start = date('Y-m-d H:i:s', strtotime($start));
+            $end   = date('Y-m-d H:i:s', strtotime($end));
+            $query->andFilterWhere(['between', 'created_at', $start, $end]);
+        }
+
+        if (!empty($this->updated_at_range)) {
+            [$start, $end] = explode(' - ', $this->updated_at_range);
+            $start = date('Y-m-d H:i:s', strtotime($start));
+            $end   = date('Y-m-d H:i:s', strtotime($end));
+            $query->andFilterWhere(['between', 'updated_at', $start, $end]);
+        }
 
         $query->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'image_url', $this->image_url]);

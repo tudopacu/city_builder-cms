@@ -11,6 +11,8 @@ use app\models\Player;
  */
 class PlayerSearch extends Player
 {
+    public $last_login_at_range;
+
     /**
      * {@inheritdoc}
      */
@@ -18,7 +20,7 @@ class PlayerSearch extends Player
     {
         return [
             [['id'], 'integer'],
-            [['username', 'email', 'password', 'created_at', 'last_login_at', 'status'], 'safe'],
+            [['username', 'email', 'password', 'created_at', 'last_login_at', 'status', 'last_login_at_range', 'created_at_range'], 'safe'],
         ];
     }
 
@@ -63,6 +65,20 @@ class PlayerSearch extends Player
             'created_at' => $this->created_at,
             'last_login_at' => $this->last_login_at,
         ]);
+
+        if (!empty($this->created_at_range)) {
+            [$start, $end] = explode(' - ', $this->created_at_range);
+            $start = date('Y-m-d H:i:s', strtotime($start));
+            $end   = date('Y-m-d H:i:s', strtotime($end));
+            $query->andFilterWhere(['between', 'created_at', $start, $end]);
+        }
+
+        if (!empty($this->last_login_at_range)) {
+            [$start, $end] = explode(' - ', $this->last_login_at_range);
+            $start = date('Y-m-d H:i:s', strtotime($start));
+            $end   = date('Y-m-d H:i:s', strtotime($end));
+            $query->andFilterWhere(['between', 'last_login_at', $start, $end]);
+        }
 
         $query->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'email', $this->email])

@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Player;
+use kartik\daterange\DateRangePicker;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -28,13 +29,48 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
+            [
+                'attribute' => 'id',
+                'filter' => Html::input('number', $searchModel->formName() . '[id]', $searchModel->id, ['class' => 'form-control']),
+            ],
             'username',
             'email:email',
-            'created_at',
-            'last_login_at',
+            [
+                'attribute' => 'created_at',
+                'format' => 'datetime',
+                'filter' => DateRangePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'created_at_range',
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'timePicker' => true,
+                        'timePicker24Hour' => true,
+                        'timePickerIncrement' => 15,
+                        'locale' => [
+                            'format' => 'Y-m-d H:i',
+                            'separator' => ' - ',
+                        ],
+                    ],
+                ]),
+            ],
+            [
+                'attribute' => 'last_login_at',
+                'format' => 'datetime',
+                'filter' => DateRangePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'last_login_at_range',
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'timePicker' => true,
+                        'timePicker24Hour' => true,
+                        'timePickerIncrement' => 15,
+                        'locale' => [
+                            'format' => 'Y-m-d H:i',
+                            'separator' => ' - ',
+                        ],
+                    ],
+                ]),
+            ],
             'status',
             [
                 'class' => ActionColumn::className(),

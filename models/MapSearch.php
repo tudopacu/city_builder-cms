@@ -11,9 +11,6 @@ use app\models\Map;
  */
 class MapSearch extends Map
 {
-    public $created_at_range;
-    public $updated_at_range;
-
     /**
      * {@inheritdoc}
      */

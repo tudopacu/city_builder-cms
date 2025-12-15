@@ -28,6 +28,12 @@ class Player extends CoreModel
     const STATUS_BANNED = 'banned';
     const STATUS_SUSPENDED = 'suspended';
 
+    const PLAYER_STATUS = [
+        self::STATUS_ACTIVE => 'Active',
+        self::STATUS_BANNED => 'Banned',
+        self::STATUS_SUSPENDED => 'Suspended'
+    ];
+
     /**
      * {@inheritdoc}
      */

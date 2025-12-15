@@ -1,0 +1,34 @@
+<?php
+
+namespace app\models;
+
+/**
+ * This is the ActiveQuery class for [[PlayerBuilding]].
+ *
+ * @see PlayerBuilding
+ */
+class PlayerBuildingQuery extends \yii\db\ActiveQuery
+{
+    /*public function active()
+    {
+        return $this->andWhere('[[status]]=1');
+    }*/
+
+    /**
+     * {@inheritdoc}
+     * @return PlayerBuilding[]|array
+     */
+    public function all($db = null)
+    {
+        return parent::all($db);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return PlayerBuilding|array|null
+     */
+    public function one($db = null)
+    {
+        return parent::one($db);
+    }
+}

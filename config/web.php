@@ -22,6 +22,9 @@ $config = [
         'map' => [
             'class' => 'app\modules\map\map',
         ],
+        'building' => [
+            'class' => 'app\modules\building\building',
+        ],
     ],
     'components' => [
         'request' => [

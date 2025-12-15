@@ -41,13 +41,27 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Users', 'url' => ['/user']],
-            ['label' => 'Players', 'url' => ['/player']],
+            [
+                'label' => 'Players',
+                'items' => [
+                    ['label' => 'Players', 'url' => ['/player']],
+                    ['label' => 'Players Buildings', 'url' => ['/player/player-building']],
+                ],
+            ],
             [
                 'label' => 'Maps',
                 'items' => [
                     ['label' => 'Maps', 'url' => ['/map']],
                     ['label' => 'Terrain', 'url' => ['/map/terrain']],
                     ['label' => 'Tiles', 'url' => ['/map/tile']],
+                ],
+            ],
+            [
+                'label' => 'Buildings',
+                'items' => [
+                    ['label' => 'Buildings', 'url' => ['/building']],
+                    ['label' => 'Buildings Categories', 'url' => ['/building/building-category']],
+                    ['label' => 'Buildings Levels', 'url' => ['/building/building-level']],
                 ],
             ],
             Yii::$app->user->isGuest

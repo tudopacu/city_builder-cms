@@ -16,8 +16,6 @@ namespace app\models;
  */
 class Map extends CoreModel
 {
-
-
     /**
      * {@inheritdoc}
      */

@@ -9,6 +9,9 @@ use yii\db\Expression;
 
 class CoreModel extends ActiveRecord
 {
+    public $created_at_range;
+    public $updated_at_range;
+
     public function behaviors()
     {
         return [
@@ -22,5 +25,4 @@ class CoreModel extends ActiveRecord
             ],
         ];
     }
-
 }

@@ -17,8 +17,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'walkable')->checkbox(['uncheck' => 0]) ?>
-
     <?= $form->field($model, 'image_url')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">

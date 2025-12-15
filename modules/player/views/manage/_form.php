@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Player;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -19,9 +20,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'status')->dropDownList([ 'active' => 'Active', 'banned' => 'Banned', 'suspended' => 'Suspended', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'status')->dropDownList(Player::PLAYER_STATUS, ['prompt' => '']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

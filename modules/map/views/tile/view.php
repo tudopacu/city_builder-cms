@@ -31,13 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'type',
-            [
-                'attribute' => 'walkable',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return Html::checkbox('walkable', $model->walkable, ['disabled' => true]);
-                },
-            ],
             'image_url:url',
             'created_at',
             'updated_at',

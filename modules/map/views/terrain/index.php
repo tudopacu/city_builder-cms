@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Terrain;
+use kartik\daterange\DateRangePicker;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -28,23 +29,72 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'id',
             [
-                'attribute' => 'map_id',
-                'value' => function ($model) {
-                    return $model->map->name ?? '(not set)';
-                },
+                'attribute' => 'id',
+                'filter' => Html::input('number', $searchModel->formName() . '[id]', $searchModel->id, ['class' => 'form-control']),
             ],
             [
-                'attribute' => 'tile_id',
+                'attribute' => 'map_name',
+                'label' => 'Map',
                 'value' => function ($model) {
-                    return $model->tile->type ?? '(not set)';
+                    return $model->map
+                        ? $model->map->id . '-' . $model->map->name
+                        : '(not set)';
                 },
+                'filter' => Html::activeTextInput($searchModel, 'map_name', [
+                    'class' => 'form-control',
+                ]),
+            ],
+            [
+                'attribute' => 'tile_type',
+                'label' => 'Tile',
+                'value' => function ($model) {
+                    return $model->tile
+                        ? $model->tile->id . '-' . $model->tile->type
+                        : '(not set)';
+                },
+                'filter' => Html::activeTextInput($searchModel, 'tile_type', [
+                    'class' => 'form-control',
+                ]),
             ],
             'x',
             'y',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'created_at',
+                'format' => 'datetime',
+                'filter' => DateRangePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'created_at_range',
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'timePicker' => true,
+                        'timePicker24Hour' => true,
+                        'timePickerIncrement' => 15,
+                        'locale' => [
+                            'format' => 'Y-m-d H:i',
+                            'separator' => ' - ',
+                        ],
+                    ],
+                ]),
+            ],
+            [
+                'attribute' => 'updated_at',
+                'format' => 'datetime',
+                'filter' => DateRangePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'updated_at_range',
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'timePicker' => true,
+                        'timePicker24Hour' => true,
+                        'timePickerIncrement' => 15,
+                        'locale' => [
+                            'format' => 'Y-m-d H:i',
+                            'separator' => ' - ',
+                        ],
+                    ],
+                ]),
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Terrain $model, $key, $index, $column) {

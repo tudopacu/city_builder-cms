@@ -18,7 +18,7 @@ class UserSearch extends User
     {
         return [
             [['id'], 'integer'],
-            [['first_name', 'last_name', 'username', 'email', 'password', 'auth_key', 'access_token', 'created_at', 'updated_at'], 'safe'],
+            [['first_name', 'last_name', 'username', 'email', 'password', 'auth_key', 'access_token', 'created_at', 'updated_at', 'created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
 
@@ -60,9 +60,21 @@ class UserSearch extends User
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
+
+        if (!empty($this->created_at_range)) {
+            [$start, $end] = explode(' - ', $this->created_at_range);
+            $start = date('Y-m-d H:i:s', strtotime($start));
+            $end   = date('Y-m-d H:i:s', strtotime($end));
+            $query->andFilterWhere(['between', 'created_at', $start, $end]);
+        }
+
+        if (!empty($this->updated_at_range)) {
+            [$start, $end] = explode(' - ', $this->updated_at_range);
+            $start = date('Y-m-d H:i:s', strtotime($start));
+            $end   = date('Y-m-d H:i:s', strtotime($end));
+            $query->andFilterWhere(['between', 'updated_at', $start, $end]);
+            }
 
         $query->andFilterWhere(['like', 'first_name', $this->first_name])
             ->andFilterWhere(['like', 'last_name', $this->last_name])

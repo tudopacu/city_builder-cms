@@ -1,6 +1,7 @@
 <?php
 
 use app\models\User;
+use kartik\daterange\DateRangePicker;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -28,9 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
+            [
+                'attribute' => 'id',
+                'filter' => Html::input('number', $searchModel->formName() . '[id]', $searchModel->id, ['class' => 'form-control']),
+            ],
             'first_name',
             'last_name',
             'username',
@@ -38,8 +40,42 @@ $this->params['breadcrumbs'][] = $this->title;
             //'password',
             //'auth_key',
             //'access_token',
-            //'created_at',
-            //'updated_at',
+            [
+                'attribute' => 'created_at',
+                'format' => 'datetime',
+                'filter' => DateRangePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'created_at_range',
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'timePicker' => true,
+                        'timePicker24Hour' => true,
+                        'timePickerIncrement' => 15,
+                        'locale' => [
+                            'format' => 'Y-m-d H:i',
+                            'separator' => ' - ',
+                        ],
+                    ],
+                ]),
+            ],
+            [
+                'attribute' => 'updated_at',
+                'format' => 'datetime',
+                'filter' => DateRangePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'updated_at_range',
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'timePicker' => true,
+                        'timePicker24Hour' => true,
+                        'timePickerIncrement' => 15,
+                        'locale' => [
+                            'format' => 'Y-m-d H:i',
+                            'separator' => ' - ',
+                        ],
+                    ],
+                ]),
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, User $model, $key, $index, $column) {
