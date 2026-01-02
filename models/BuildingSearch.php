@@ -18,7 +18,7 @@ class BuildingSearch extends Building
     {
         return [
             [['id', 'width', 'length', 'building_category_id', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'description', 'created_at_range', 'updated_at_range'], 'safe'],
+            [['name', 'image_url', 'description', 'created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
 
@@ -80,6 +80,7 @@ class BuildingSearch extends Building
         }
 
         $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'image_url', $this->image_url])
             ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;

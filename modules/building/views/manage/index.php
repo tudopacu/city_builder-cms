@@ -8,6 +8,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
 /** @var app\models\BuildingSearch $searchModel */
@@ -24,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Building', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+    <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
@@ -35,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::input('number', $searchModel->formName() . '[id]', $searchModel->id, ['class' => 'form-control']),
             ],
             'name',
+            'image_url:url',
             'description:ntext',
             [
                 'attribute' => 'width',
@@ -102,5 +105,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
+    <?php Pjax::end(); ?>
 
 </div>

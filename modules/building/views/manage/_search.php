@@ -19,6 +19,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name') ?>
 
+    <?= $form->field($model, 'image_url') ?>
+
     <?= $form->field($model, 'description') ?>
 
     <?= $form->field($model, 'width') ?>

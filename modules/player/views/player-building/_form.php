@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Building;
+use app\models\BuildingLevel;
 use app\models\Map;
 use app\models\Player;
 use yii\helpers\ArrayHelper;
@@ -48,7 +49,7 @@ use yii\widgets\ActiveForm;
     ); ?>
 
     <?= $form->field($model, 'building_level_id')->dropDownList(
-        [],
+        ArrayHelper::map(BuildingLevel::find()->where(['building_id' => $model->building_id])->all(), 'id', 'level'),
         [
             'prompt' => 'Select a Building Level',
             'id' => 'building-level-id',

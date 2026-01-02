@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $name
+ * @property string $image_url
  * @property string|null $description
  * @property int $width
  * @property int $length
@@ -38,12 +39,12 @@ class Building extends CoreModel
     public function rules()
     {
         return [
-            [['description', 'updated_at'], 'default', 'value' => null],
+            [['image_url', 'description', 'updated_at'], 'default', 'value' => null],
             [['name', 'width', 'length', 'building_category_id'], 'required'],
             [['description'], 'string'],
             [['width', 'length', 'building_category_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['name'], 'string', 'max' => 255],
+            [['name', 'image_url'], 'string', 'max' => 255],
             [['building_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => BuildingCategory::class, 'targetAttribute' => ['building_category_id' => 'id']],
         ];
     }
@@ -56,6 +57,7 @@ class Building extends CoreModel
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'image_url' => 'Image Url',
             'description' => 'Description',
             'width' => 'Width',
             'length' => 'Length',
