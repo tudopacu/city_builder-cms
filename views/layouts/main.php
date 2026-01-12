@@ -3,12 +3,15 @@
 /** @var yii\web\View $this */
 /** @var string $content */
 
+use app\views\layouts\Menu;
 use app\assets\AppAsset;
 use app\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+
+
 
 AppAsset::register($this);
 
@@ -38,43 +41,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Users', 'url' => ['/user']],
-            [
-                'label' => 'Players',
-                'items' => [
-                    ['label' => 'Players', 'url' => ['/player']],
-                    ['label' => 'Players Buildings', 'url' => ['/player/player-building']],
-                ],
-            ],
-            [
-                'label' => 'Maps',
-                'items' => [
-                    ['label' => 'Maps', 'url' => ['/map']],
-                    ['label' => 'Terrain', 'url' => ['/map/terrain']],
-                    ['label' => 'Tiles', 'url' => ['/map/tile']],
-                ],
-            ],
-            [
-                'label' => 'Buildings',
-                'items' => [
-                    ['label' => 'Buildings', 'url' => ['/building']],
-                    ['label' => 'Buildings Categories', 'url' => ['/building/building-category']],
-                    ['label' => 'Buildings Levels', 'url' => ['/building/building-level']],
-                ],
-            ],
-            Yii::$app->user->isGuest
-                ? ['label' => 'Login', 'url' => ['/site/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
+        'items' => Menu::getMenu()
     ]);
     NavBar::end();
     ?>

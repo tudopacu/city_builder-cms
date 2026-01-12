@@ -25,6 +25,9 @@ $config = [
         'building' => [
             'class' => 'app\modules\building\building',
         ],
+        'news' => [
+            'class' => 'app\modules\news\news',
+        ],
     ],
     'components' => [
         'request' => [
