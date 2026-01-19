@@ -150,7 +150,6 @@ body.dark-mode .form-control:focus {
     z-index: 9999;
     transition: all 0.3s ease;
     overflow: hidden;
-    position: relative;
 }
 
 #dark-mode-toggle:hover {
