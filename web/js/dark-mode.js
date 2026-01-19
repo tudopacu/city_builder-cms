@@ -35,22 +35,22 @@
         }
     }
     
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            initDarkMode();
-            
-            const toggleBtn = document.getElementById('dark-mode-toggle');
-            if (toggleBtn) {
-                toggleBtn.addEventListener('click', toggleDarkMode);
-            }
-        });
-    } else {
-        initDarkMode();
-        
+    // Attach event listener to toggle button
+    function attachEventListener() {
         const toggleBtn = document.getElementById('dark-mode-toggle');
         if (toggleBtn) {
             toggleBtn.addEventListener('click', toggleDarkMode);
         }
+    }
+    
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            initDarkMode();
+            attachEventListener();
+        });
+    } else {
+        initDarkMode();
+        attachEventListener();
     }
 })();
