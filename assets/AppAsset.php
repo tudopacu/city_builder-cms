@@ -23,6 +23,7 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
+        'js/dark-mode.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
