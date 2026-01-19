@@ -65,6 +65,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     </div>
 </footer>
 
+<!-- Dark mode toggle button -->
+<button id="dark-mode-toggle" data-mode="light" aria-label="Toggle dark mode"></button>
+
 <?php $this->endBody() ?>
 </body>
 </html>
