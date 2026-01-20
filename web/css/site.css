@@ -152,7 +152,7 @@ body.dark-mode .form-control:focus {
 /* Dark mode toggle button */
 #dark-mode-toggle {
     position: fixed;
-    bottom: 20px;
+    top: 70px;
     right: 20px;
     width: 60px;
     height: 60px;
