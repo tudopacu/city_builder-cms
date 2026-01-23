@@ -28,6 +28,9 @@ $config = [
         'news' => [
             'class' => 'app\modules\news\news',
         ],
+        'item' => [
+            'class' => 'app\modules\item\item',
+        ],
     ],
     'components' => [
         'request' => [
