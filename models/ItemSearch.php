@@ -17,8 +17,8 @@ class ItemSearch extends Item
     public function rules()
     {
         return [
-            [['id', 'max_stack', 'value', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'description', 'type', 'rarity', 'icon_url', 'created_at_range', 'updated_at_range'], 'safe'],
+            [['id', 'max_stack', 'value'], 'integer'],
+            [['name', 'description', 'type', 'rarity', 'icon_url', 'created_at_range', 'updated_at_range', 'created_at', 'updated_at'], 'safe'],
             [['is_tradeable'], 'boolean'],
         ];
     }
@@ -66,15 +66,15 @@ class ItemSearch extends Item
             'is_tradeable' => $this->is_tradeable,
         ]);
 
-        if (!empty($this->created_at_range)) {
-            [$start, $end] = explode(' - ', $this->created_at_range);
+        if (!empty($this->created_at_range) && strpos($this->created_at_range, ' - ') !== false) {
+            [$start, $end] = explode(' - ', $this->created_at_range, 2);
             $start = date('Y-m-d H:i:s', strtotime($start));
             $end   = date('Y-m-d H:i:s', strtotime($end));
             $query->andFilterWhere(['between', 'created_at', $start, $end]);
         }
 
-        if (!empty($this->updated_at_range)) {
-            [$start, $end] = explode(' - ', $this->updated_at_range);
+        if (!empty($this->updated_at_range) && strpos($this->updated_at_range, ' - ') !== false) {
+            [$start, $end] = explode(' - ', $this->updated_at_range, 2);
             $start = date('Y-m-d H:i:s', strtotime($start));
             $end   = date('Y-m-d H:i:s', strtotime($end));
             $query->andFilterWhere(['between', 'updated_at', $start, $end]);

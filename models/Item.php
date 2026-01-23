@@ -36,7 +36,7 @@ class Item extends CoreModel
     {
         return [
             [['icon_url', 'description', 'updated_at'], 'default', 'value' => null],
-            [['name', 'type'], 'required'],
+            [['name', 'type', 'rarity'], 'required'],
             [['description'], 'string'],
             [['max_stack', 'value'], 'integer'],
             [['is_tradeable'], 'boolean'],
