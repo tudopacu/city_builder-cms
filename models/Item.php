@@ -20,6 +20,11 @@ use Yii;
  */
 class Item extends CoreModel
 {
+    const ITEM_TYPES = [
+        'raw' => 'Raw',
+        'compound' => 'Compound',
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -37,12 +42,12 @@ class Item extends CoreModel
             [['icon_url', 'description', 'updated_at', 'item_recipe_id'], 'default', 'value' => null],
             [['name', 'type'], 'required'],
             [['description'], 'string'],
-            [['value', 'item_recipe_id'], 'integer'],
+            [['item_recipe_id'], 'integer'],
             [['is_tradeable'], 'boolean'],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'icon_url'], 'string', 'max' => 255],
             [['type'], 'string', 'max' => 50],
-            [['type'], 'in', 'range' => ['resource', 'building_material', 'consumable', 'quest', 'decoration']],
+            [['type'], 'in', 'range' => array_keys(self::ITEM_TYPES)],
         ];
     }
 
@@ -57,7 +62,6 @@ class Item extends CoreModel
             'description' => 'Description',
             'type' => 'Type',
             'icon_url' => 'Icon URL',
-            'value' => 'Value',
             'is_tradeable' => 'Is Tradeable',
             'item_recipe_id' => 'Item Recipe ID',
             'created_at' => 'Created At',

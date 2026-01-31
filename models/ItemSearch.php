@@ -17,7 +17,7 @@ class ItemSearch extends Item
     public function rules()
     {
         return [
-            [['id', 'value', 'item_recipe_id'], 'integer'],
+            [['id', 'item_recipe_id'], 'integer'],
             [['name', 'description', 'type', 'icon_url', 'created_at_range', 'updated_at_range', 'created_at', 'updated_at'], 'safe'],
             [['is_tradeable'], 'boolean'],
         ];
@@ -61,7 +61,6 @@ class ItemSearch extends Item
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'value' => $this->value,
             'is_tradeable' => $this->is_tradeable,
             'item_recipe_id' => $this->item_recipe_id,
         ]);

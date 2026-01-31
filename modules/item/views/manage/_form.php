@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Item;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -16,13 +17,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'type')->dropDownList([
-        'resource' => 'Resource',
-        'building_material' => 'Building Material',
-        'consumable' => 'Consumable',
-        'quest' => 'Quest',
-        'decoration' => 'Decoration',
-    ], ['prompt' => 'Select Type']) ?>
+    <?= $form->field($model, 'type')->dropDownList(Item::ITEM_TYPES, ['prompt' => 'Select Type']) ?>
 
     <?= $form->field($model, 'icon_url')->textInput(['maxlength' => true]) ?>
 
