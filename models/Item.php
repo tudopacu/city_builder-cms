@@ -17,6 +17,10 @@ use Yii;
  * @property int|null $item_recipe_id
  * @property string|null $created_at
  * @property string|null $updated_at
+ *
+ * @property ItemRecipe $itemRecipe
+ * @property ItemRecipe[] $itemRecipesAsOutput
+ * @property ItemRecipeInput[] $itemRecipeInputs
  */
 class Item extends CoreModel
 {
@@ -43,6 +47,7 @@ class Item extends CoreModel
             [['name', 'icon_url'], 'string', 'max' => 255],
             [['type'], 'string', 'max' => 50],
             [['type'], 'in', 'range' => ['resource', 'building_material', 'consumable', 'quest', 'decoration']],
+            [['item_recipe_id'], 'exist', 'skipOnError' => true, 'targetClass' => ItemRecipe::class, 'targetAttribute' => ['item_recipe_id' => 'id']],
         ];
     }
 
@@ -63,6 +68,36 @@ class Item extends CoreModel
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * Gets query for [[ItemRecipe]].
+     *
+     * @return \yii\db\ActiveQuery|ItemRecipeQuery
+     */
+    public function getItemRecipe()
+    {
+        return $this->hasOne(ItemRecipe::class, ['id' => 'item_recipe_id']);
+    }
+
+    /**
+     * Gets query for [[ItemRecipesAsOutput]].
+     *
+     * @return \yii\db\ActiveQuery|ItemRecipeQuery
+     */
+    public function getItemRecipesAsOutput()
+    {
+        return $this->hasMany(ItemRecipe::class, ['output_item_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[ItemRecipeInputs]].
+     *
+     * @return \yii\db\ActiveQuery|ItemRecipeInputQuery
+     */
+    public function getItemRecipeInputs()
+    {
+        return $this->hasMany(ItemRecipeInput::class, ['input_item_id' => 'id']);
     }
 
     /**
