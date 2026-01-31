@@ -20,6 +20,7 @@ use Yii;
  * @property BuildingCategory $buildingCategory
  * @property BuildingLevel[] $buildingLevels
  * @property PlayerBuilding[] $playerBuildings
+ * @property BuildingProduction[] $buildingProductions
  */
 class Building extends CoreModel
 {
@@ -95,6 +96,16 @@ class Building extends CoreModel
     public function getPlayerBuildings()
     {
         return $this->hasMany(PlayerBuilding::class, ['building_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[BuildingProductions]].
+     *
+     * @return \yii\db\ActiveQuery|BuildingProductionQuery
+     */
+    public function getBuildingProductions()
+    {
+        return $this->hasMany(BuildingProduction::class, ['building_id' => 'id']);
     }
 
     /**
