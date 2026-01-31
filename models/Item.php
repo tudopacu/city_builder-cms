@@ -11,11 +11,10 @@ use Yii;
  * @property string $name
  * @property string|null $description
  * @property string $type
- * @property string $rarity
  * @property string|null $icon_url
- * @property int $max_stack
  * @property int $value
  * @property bool $is_tradeable
+ * @property int|null $item_recipe_id
  * @property string|null $created_at
  * @property string|null $updated_at
  */
@@ -35,16 +34,14 @@ class Item extends CoreModel
     public function rules()
     {
         return [
-            [['icon_url', 'description', 'updated_at'], 'default', 'value' => null],
-            [['name', 'type', 'rarity'], 'required'],
+            [['icon_url', 'description', 'updated_at', 'item_recipe_id'], 'default', 'value' => null],
+            [['name', 'type'], 'required'],
             [['description'], 'string'],
-            [['max_stack', 'value'], 'integer'],
+            [['value', 'item_recipe_id'], 'integer'],
             [['is_tradeable'], 'boolean'],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'icon_url'], 'string', 'max' => 255],
             [['type'], 'string', 'max' => 50],
-            [['rarity'], 'string', 'max' => 20],
-            [['rarity'], 'in', 'range' => ['common', 'uncommon', 'rare', 'epic', 'legendary']],
             [['type'], 'in', 'range' => ['resource', 'building_material', 'consumable', 'quest', 'decoration']],
         ];
     }
@@ -59,11 +56,10 @@ class Item extends CoreModel
             'name' => 'Name',
             'description' => 'Description',
             'type' => 'Type',
-            'rarity' => 'Rarity',
             'icon_url' => 'Icon URL',
-            'max_stack' => 'Max Stack',
             'value' => 'Value',
             'is_tradeable' => 'Is Tradeable',
+            'item_recipe_id' => 'Item Recipe ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

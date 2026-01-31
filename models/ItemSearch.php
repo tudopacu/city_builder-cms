@@ -17,8 +17,8 @@ class ItemSearch extends Item
     public function rules()
     {
         return [
-            [['id', 'max_stack', 'value'], 'integer'],
-            [['name', 'description', 'type', 'rarity', 'icon_url', 'created_at_range', 'updated_at_range', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'value', 'item_recipe_id'], 'integer'],
+            [['name', 'description', 'type', 'icon_url', 'created_at_range', 'updated_at_range', 'created_at', 'updated_at'], 'safe'],
             [['is_tradeable'], 'boolean'],
         ];
     }
@@ -61,9 +61,9 @@ class ItemSearch extends Item
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'max_stack' => $this->max_stack,
             'value' => $this->value,
             'is_tradeable' => $this->is_tradeable,
+            'item_recipe_id' => $this->item_recipe_id,
         ]);
 
         if (!empty($this->created_at_range) && strpos($this->created_at_range, ' - ') !== false) {
@@ -83,7 +83,6 @@ class ItemSearch extends Item
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'rarity', $this->rarity])
             ->andFilterWhere(['like', 'icon_url', $this->icon_url]);
 
         return $dataProvider;

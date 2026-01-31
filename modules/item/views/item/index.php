@@ -35,13 +35,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'name',
             'type',
-            'rarity',
-            'max_stack',
             'value',
             [
                 'attribute' => 'is_tradeable',
                 'format' => 'boolean',
                 'filter' => Html::activeDropDownList($searchModel, 'is_tradeable', [1 => 'Yes', 0 => 'No'], ['class' => 'form-control', 'prompt' => 'All']),
+            ],
+            [
+                'attribute' => 'item_recipe_id',
+                'filter' => Html::input('number', $searchModel->formName() . '[item_recipe_id]', $searchModel->item_recipe_id, ['class' => 'form-control']),
             ],
             [
                 'attribute' => 'created_at',

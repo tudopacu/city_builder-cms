@@ -24,21 +24,13 @@ use yii\widgets\ActiveForm;
         'decoration' => 'Decoration',
     ], ['prompt' => 'Select Type']) ?>
 
-    <?= $form->field($model, 'rarity')->dropDownList([
-        'common' => 'Common',
-        'uncommon' => 'Uncommon',
-        'rare' => 'Rare',
-        'epic' => 'Epic',
-        'legendary' => 'Legendary',
-    ], ['prompt' => 'Select Rarity']) ?>
-
     <?= $form->field($model, 'icon_url')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'max_stack')->textInput(['type' => 'number']) ?>
 
     <?= $form->field($model, 'value')->textInput(['type' => 'number']) ?>
 
     <?= $form->field($model, 'is_tradeable')->checkbox() ?>
+
+    <?= $form->field($model, 'item_recipe_id')->textInput(['type' => 'number']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
