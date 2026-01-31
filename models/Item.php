@@ -20,6 +20,7 @@ use Yii;
  * @property ItemRecipe[] $itemRecipesAsOutput
  * @property ItemRecipeInput[] $itemRecipeInputs
  * @property BuildingProduction[] $buildingProductions
+ * @property BuildingConstructionCost[] $buildingConstructionCosts
  */
 class Item extends CoreModel
 {
@@ -98,6 +99,16 @@ class Item extends CoreModel
     public function getBuildingProductions()
     {
         return $this->hasMany(BuildingProduction::class, ['item_id' => 'id']);
+    }
+  
+    /**
+     * Gets query for [[BuildingConstructionCosts]].
+     *
+     * @return \yii\db\ActiveQuery|BuildingConstructionCostQuery
+     */
+    public function getBuildingConstructionCosts()
+    {
+        return $this->hasMany(BuildingConstructionCost::class, ['item_id' => 'id']);
     }
 
     /**

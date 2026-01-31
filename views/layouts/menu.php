@@ -35,6 +35,7 @@ class Menu
                         ['label' => 'Buildings', 'url' => ['/building']],
                         ['label' => 'Buildings Categories', 'url' => ['/building/building-category']],
                         ['label' => 'Buildings Levels', 'url' => ['/building/building-level']],
+                        ['label' => 'Buildings Construction Costs', 'url' => ['/building/building-construction-cost']],
                     ],
                 ],
                 [
