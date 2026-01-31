@@ -48,8 +48,8 @@ class BuildingConstructionCost extends CoreModel
     {
         return [
             'id' => 'ID',
-            'building_id' => 'Building ID',
-            'item_id' => 'Item ID',
+            'building_id' => 'Building',
+            'item_id' => 'Item',
             'quantity' => 'Quantity',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

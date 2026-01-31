@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('Add Construction Cost', ['building-construction-cost/create', 'building_id' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -46,5 +47,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'updated_at',
         ],
     ]) ?>
+
+    <h3>Construction Costs</h3>
+    <?php if ($model->buildingConstructionCosts): ?>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => array_map(function ($input) {
+                return [
+                    'label' => $input->item ? $input->item->name : 'Item #' . $input->item_id,
+                    'value' => $input->quantity,
+                ];
+            }, $model->buildingConstructionCosts),
+        ]) ?>
+    <?php else: ?>
+        <p class="text-muted">No costs defined for this building.</p>
+    <?php endif; ?>
 
 </div>

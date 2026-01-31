@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Go to building', ['building/view', 'id' => $model->building_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Go to building', ['manage/view', 'id' => $model->building_id], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([

@@ -47,7 +47,7 @@ class ItemRecipe extends CoreModel
     {
         return [
             'id' => 'ID',
-            'item_id' => 'Item ID',
+            'item_id' => 'Item',
             'production_time_seconds' => 'Production Time (seconds)',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

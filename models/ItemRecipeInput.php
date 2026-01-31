@@ -48,8 +48,8 @@ class ItemRecipeInput extends CoreModel
     {
         return [
             'id' => 'ID',
-            'recipe_id' => 'Recipe ID',
-            'input_item_id' => 'Input Item ID',
+            'recipe_id' => 'Recipe',
+            'input_item_id' => 'Item',
             'quantity' => 'Quantity',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

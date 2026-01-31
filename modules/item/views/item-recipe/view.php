@@ -43,22 +43,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h3>Recipe Inputs</h3>
     <?php if ($model->itemRecipeInputs): ?>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Input Item</th>
-                    <th>Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($model->itemRecipeInputs as $input): ?>
-                    <tr>
-                        <td><?= Html::encode($input->inputItem ? $input->inputItem->name : 'Item #' . $input->input_item_id) ?></td>
-                        <td><?= Html::encode($input->quantity) ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => array_map(function ($input) {
+                return [
+                    'label' => $input->inputItem ? $input->inputItem->name : 'Item #' . $input->input_item_id,
+                    'value' => $input->quantity,
+                ];
+            }, $model->itemRecipeInputs),
+        ]) ?>
     <?php else: ?>
         <p class="text-muted">No inputs defined for this recipe.</p>
     <?php endif; ?>
