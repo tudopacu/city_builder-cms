@@ -34,7 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::input('number', $searchModel->formName() . '[id]', $searchModel->id, ['class' => 'form-control']),
             ],
             'name',
-            'type',
+            [
+                'attribute' => 'type',
+                'filter' => Html::activeDropDownList($searchModel, 'type', Item::ITEM_TYPES, ['class' => 'form-control', 'prompt' => 'All']),
+            ],
             [
                 'attribute' => 'is_tradeable',
                 'format' => 'boolean',
@@ -78,9 +81,24 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Item $model, $key, $index, $column) {
+                'template' => '{view} {update} {delete} {view-recipe}',
+                'urlCreator' => function ($action, $model, $key, $index) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                },
+                'buttons' => [
+                    'view-recipe' => function ($url, $model, $key) {
+                        if ($model->type === 'compound') {
+                            return Html::a(
+                                '<i class="fas fa-book"></i>',
+                                ['/item/item-recipe/view-by-item', 'itemId' => $model->id],
+                                [
+                                    'title' => 'View Recipe',
+                                    'data-pjax' => '0',
+                                ]
+                            );
+                        }
+                    },
+                ],
             ],
         ],
     ]); ?>

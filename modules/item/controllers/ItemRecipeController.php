@@ -68,6 +68,7 @@ class ItemRecipeController extends Controller
     public function actionCreate()
     {
         $model = new ItemRecipe();
+        $model->item_id = $this->request->get('item_id', $model->item_id);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -130,5 +131,15 @@ class ItemRecipeController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionViewByItem($itemId)
+    {
+        $itemRecipe = ItemRecipe::find()->where(['item_id' => $itemId])->one();
+        if ($itemRecipe) {
+            return $this->redirect(['view', 'id' => $itemRecipe->id]);
+        } else {
+            return $this->redirect(['create', 'item_id' => $itemId]);
+        }
     }
 }

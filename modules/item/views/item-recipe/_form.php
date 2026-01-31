@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'item_id')->dropDownList(
         ArrayHelper::map(Item::find()->orderBy('name')->all(), 'id', 'name'),
-        ['prompt' => 'Select Output Item']
+        ['prompt' => 'Select Item']
     ) ?>
 
     <?= $form->field($model, 'production_time_seconds')->textInput(['type' => 'number']) ?>

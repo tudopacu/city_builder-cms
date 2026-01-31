@@ -1,7 +1,9 @@
 <?php
 
+use app\models\Item;
 use app\models\ItemRecipeInput;
 use kartik\daterange\DateRangePicker;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -45,9 +47,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model) {
                     return $model->inputItem ? $model->inputItem->name : $model->input_item_id;
                 },
-                'filter' => Html::input('number', $searchModel->formName() . '[input_item_id]', $searchModel->input_item_id, ['class' => 'form-control']),
+                'filter' => Html::dropDownList(
+                    $searchModel->formName() . '[input_item_id]',
+                    $searchModel->input_item_id,
+                    ArrayHelper::map(Item::find()->orderBy('name')->all(), 'id', 'name'),
+                    ['class' => 'form-control', 'prompt' => 'Select Item']
+                ),
             ],
-            'quantity',
+            [
+                'attribute' => 'quantity',
+                'filter' => Html::input('number', $searchModel->formName() . '[quantity]', $searchModel->quantity, ['class' => 'form-control']),
+            ],
             [
                 'attribute' => 'created_at',
                 'format' => 'datetime',

@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('Go to recipe', ['item-recipe/view', 'id' => $model->recipe_id], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([

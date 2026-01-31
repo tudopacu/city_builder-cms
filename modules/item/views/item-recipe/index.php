@@ -1,7 +1,9 @@
 <?php
 
+use app\models\Item;
 use app\models\ItemRecipe;
 use kartik\daterange\DateRangePicker;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -38,9 +40,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model) {
                     return $model->outputItem ? $model->outputItem->name : $model->item_id;
                 },
-                'filter' => Html::input('number', $searchModel->formName() . '[item_id]', $searchModel->item_id, ['class' => 'form-control']),
+                'filter' => Html::dropDownList(
+                    $searchModel->formName() . '[item_id]',
+                    $searchModel->item_id,
+                    ArrayHelper::map(Item::find()->orderBy('name')->all(), 'id', 'name'),
+                    ['class' => 'form-control', 'prompt' => 'Select Item']
+                ),
             ],
-            'production_time_seconds',
+            [
+                'attribute' => 'production_time_seconds',
+                'filter' => Html::input('number', $searchModel->formName() . '[production_time_seconds]', $searchModel->production_time_seconds, ['class' => 'form-control']),
+            ],
             [
                 'attribute' => 'created_at',
                 'format' => 'datetime',
@@ -79,9 +89,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, ItemRecipe $model, $key, $index, $column) {
+                'template' => '{view} {update} {delete} {view-recipe-items}',
+                'urlCreator' => function ($action, $model, $key, $index) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                },
+                'buttons' => [
+                'view-recipe-items' => function ($url, $model, $key) {
+                    return Html::a(
+                        '<i class="fas fa-list"></i>',
+                        ['/item/item-recipe-input/index', 'recipe_id' => $model->id],
+                        [
+                            'title' => 'View input items',
+                            'data-pjax' => '0',
+                        ]
+                    );
+                },
+                ],
             ],
         ],
     ]); ?>

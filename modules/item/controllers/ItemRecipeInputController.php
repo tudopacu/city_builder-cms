@@ -39,6 +39,13 @@ class ItemRecipeInputController extends Controller
     public function actionIndex()
     {
         $searchModel = new ItemRecipeInputSearch();
+
+        $recipe_id = $this->request->get('recipe_id');
+
+        if($recipe_id) {
+            $searchModel->recipe_id = $recipe_id;
+        }
+
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -68,6 +75,7 @@ class ItemRecipeInputController extends Controller
     public function actionCreate()
     {
         $model = new ItemRecipeInput();
+        $model->recipe_id = $this->request->get('recipe_id', $model->recipe_id);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
