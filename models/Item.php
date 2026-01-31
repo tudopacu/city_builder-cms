@@ -19,6 +19,7 @@ use Yii;
  * @property ItemRecipe $itemRecipe
  * @property ItemRecipe[] $itemRecipesAsOutput
  * @property ItemRecipeInput[] $itemRecipeInputs
+ * @property BuildingProduction[] $buildingProductions
  * @property BuildingConstructionCost[] $buildingConstructionCosts
  */
 class Item extends CoreModel
@@ -90,6 +91,16 @@ class Item extends CoreModel
         return $this->hasMany(ItemRecipeInput::class, ['input_item_id' => 'id']);
     }
 
+    /**
+     * Gets query for [[BuildingProductions]].
+     *
+     * @return \yii\db\ActiveQuery|BuildingProductionQuery
+     */
+    public function getBuildingProductions()
+    {
+        return $this->hasMany(BuildingProduction::class, ['item_id' => 'id']);
+    }
+  
     /**
      * Gets query for [[BuildingConstructionCosts]].
      *
