@@ -34,11 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::input('number', $searchModel->formName() . '[id]', $searchModel->id, ['class' => 'form-control']),
             ],
             [
-                'attribute' => 'output_item_id',
+                'attribute' => 'item_id',
                 'value' => function($model) {
-                    return $model->outputItem ? $model->outputItem->name : $model->output_item_id;
+                    return $model->outputItem ? $model->outputItem->name : $model->item_id;
                 },
-                'filter' => Html::input('number', $searchModel->formName() . '[output_item_id]', $searchModel->output_item_id, ['class' => 'form-control']),
+                'filter' => Html::input('number', $searchModel->formName() . '[item_id]', $searchModel->item_id, ['class' => 'form-control']),
             ],
             'production_time_seconds',
             [

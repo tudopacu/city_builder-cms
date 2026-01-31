@@ -11,16 +11,16 @@ class m260131_092700_item_recipes extends Migration
     {
         $this->createTable('{{%item_recipes}}', [
             'id' => $this->primaryKey(),
-            'output_item_id' => $this->integer()->notNull(),
+            'item_id' => $this->integer()->notNull(),
             'production_time_seconds' => $this->integer()->notNull(),
             'created_at' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP'),
             'updated_at' => $this->dateTime(),
         ]);
 
         $this->addForeignKey(
-            'fk-item_recipes-output_item_id',
+            'fk-item_recipes-item_id',
             '{{%item_recipes}}',
-            'output_item_id',
+            'item_id',
             '{{%items}}',
             'id',
             'CASCADE',
@@ -28,9 +28,9 @@ class m260131_092700_item_recipes extends Migration
         );
 
         $this->createIndex(
-            'idx-item_recipes-output_item_id',
+            'idx-item_recipes-item_id',
             '{{%item_recipes}}',
-            'output_item_id'
+            'item_id'
         );
     }
 

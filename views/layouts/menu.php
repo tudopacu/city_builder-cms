@@ -37,7 +37,14 @@ class Menu
                         ['label' => 'Buildings Levels', 'url' => ['/building/building-level']],
                     ],
                 ],
-                ['label' => 'Items', 'url' => ['/item']],
+                [
+                    'label' => 'Items',
+                    'items' => [
+                        ['label' => 'Items', 'url' => ['/item']],
+                        ['label' => 'Item Recipes', 'url' => ['/item/item-recipe']],
+                        ['label' => 'Recipes Inputs', 'url' => ['/item/item-recipe-input']],
+                    ],
+                ],
                 ['label' => 'News', 'url' => ['/news']]
             ];
         }

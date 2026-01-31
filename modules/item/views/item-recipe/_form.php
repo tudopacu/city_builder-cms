@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'output_item_id')->dropDownList(
+    <?= $form->field($model, 'item_id')->dropDownList(
         ArrayHelper::map(Item::find()->orderBy('name')->all(), 'id', 'name'),
         ['prompt' => 'Select Output Item']
     ) ?>

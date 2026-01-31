@@ -17,7 +17,7 @@ class ItemSearch extends Item
     public function rules()
     {
         return [
-            [['id', 'item_recipe_id'], 'integer'],
+            [['id'], 'integer'],
             [['name', 'description', 'type', 'icon_url', 'created_at_range', 'updated_at_range', 'created_at', 'updated_at'], 'safe'],
             [['is_tradeable'], 'boolean'],
         ];
@@ -62,7 +62,6 @@ class ItemSearch extends Item
         $query->andFilterWhere([
             'id' => $this->id,
             'is_tradeable' => $this->is_tradeable,
-            'item_recipe_id' => $this->item_recipe_id,
         ]);
 
         if (!empty($this->created_at_range) && strpos($this->created_at_range, ' - ') !== false) {

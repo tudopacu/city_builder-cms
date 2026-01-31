@@ -16,7 +16,7 @@ class ItemRecipeSearch extends ItemRecipe
     public function rules()
     {
         return [
-            [['id', 'output_item_id', 'production_time_seconds'], 'integer'],
+            [['id', 'item_id', 'production_time_seconds'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -58,7 +58,7 @@ class ItemRecipeSearch extends ItemRecipe
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'output_item_id' => $this->output_item_id,
+            'item_id' => $this->item_id,
             'production_time_seconds' => $this->production_time_seconds,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

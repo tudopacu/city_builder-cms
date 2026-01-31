@@ -21,11 +21,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'icon_url')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'value')->textInput(['type' => 'number']) ?>
-
     <?= $form->field($model, 'is_tradeable')->checkbox() ?>
-
-    <?= $form->field($model, 'item_recipe_id')->textInput(['type' => 'number']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

@@ -12,9 +12,7 @@ use Yii;
  * @property string|null $description
  * @property string $type
  * @property string|null $icon_url
- * @property int $value
  * @property bool $is_tradeable
- * @property int|null $item_recipe_id
  * @property string|null $created_at
  * @property string|null $updated_at
  *
@@ -43,16 +41,14 @@ class Item extends CoreModel
     public function rules()
     {
         return [
-            [['icon_url', 'description', 'updated_at', 'item_recipe_id'], 'default', 'value' => null],
+            [['icon_url', 'description', 'updated_at'], 'default', 'value' => null],
             [['name', 'type'], 'required'],
             [['description'], 'string'],
-            [['item_recipe_id'], 'integer'],
             [['is_tradeable'], 'boolean'],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'icon_url'], 'string', 'max' => 255],
             [['type'], 'string', 'max' => 50],
             [['type'], 'in', 'range' => array_keys(self::ITEM_TYPES)],
-            [['item_recipe_id'], 'exist', 'skipOnError' => true, 'targetClass' => ItemRecipe::class, 'targetAttribute' => ['item_recipe_id' => 'id']],
         ];
     }
 
@@ -68,20 +64,9 @@ class Item extends CoreModel
             'type' => 'Type',
             'icon_url' => 'Icon URL',
             'is_tradeable' => 'Is Tradeable',
-            'item_recipe_id' => 'Item Recipe ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
-    }
-
-    /**
-     * Gets query for [[ItemRecipe]].
-     *
-     * @return \yii\db\ActiveQuery|ItemRecipeQuery
-     */
-    public function getItemRecipe()
-    {
-        return $this->hasOne(ItemRecipe::class, ['id' => 'item_recipe_id']);
     }
 
     /**
@@ -91,7 +76,7 @@ class Item extends CoreModel
      */
     public function getItemRecipesAsOutput()
     {
-        return $this->hasMany(ItemRecipe::class, ['output_item_id' => 'id']);
+        return $this->hasMany(ItemRecipe::class, ['item_id' => 'id']);
     }
 
     /**

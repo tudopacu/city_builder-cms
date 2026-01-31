@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "item_recipes".
  *
  * @property int $id
- * @property int $output_item_id
+ * @property int $item_id
  * @property int $production_time_seconds
  * @property string|null $created_at
  * @property string|null $updated_at
@@ -33,10 +33,10 @@ class ItemRecipe extends CoreModel
     public function rules()
     {
         return [
-            [['output_item_id', 'production_time_seconds'], 'required'],
-            [['output_item_id', 'production_time_seconds'], 'integer'],
+            [['item_id', 'production_time_seconds'], 'required'],
+            [['item_id', 'production_time_seconds'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['output_item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Item::class, 'targetAttribute' => ['output_item_id' => 'id']],
+            [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Item::class, 'targetAttribute' => ['item_id' => 'id']],
         ];
     }
 
@@ -47,7 +47,7 @@ class ItemRecipe extends CoreModel
     {
         return [
             'id' => 'ID',
-            'output_item_id' => 'Output Item ID',
+            'item_id' => 'Item ID',
             'production_time_seconds' => 'Production Time (seconds)',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -61,7 +61,7 @@ class ItemRecipe extends CoreModel
      */
     public function getOutputItem()
     {
-        return $this->hasOne(Item::class, ['id' => 'output_item_id']);
+        return $this->hasOne(Item::class, ['id' => 'item_id']);
     }
 
     /**
@@ -72,16 +72,6 @@ class ItemRecipe extends CoreModel
     public function getItemRecipeInputs()
     {
         return $this->hasMany(ItemRecipeInput::class, ['recipe_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Items]] through item_recipe_id in items table.
-     *
-     * @return \yii\db\ActiveQuery|ItemQuery
-     */
-    public function getItems()
-    {
-        return $this->hasMany(Item::class, ['item_recipe_id' => 'id']);
     }
 
     /**
