@@ -12,7 +12,7 @@ class m260207_084405_player_inventories extends Migration
         $this->createTable('{{%player_inventories}}', [
             'id' => $this->primaryKey(),
             'player_id' => $this->integer()->notNull(),
-            'building_id' => $this->integer()->notNull(),
+            'player_building_id' => $this->integer()->notNull(),
             'capacity' => $this->integer()->notNull(),
             'created_at' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP'),
             'updated_at' => $this->dateTime(),
@@ -29,10 +29,10 @@ class m260207_084405_player_inventories extends Migration
         );
 
         $this->addForeignKey(
-            'fk_pi_building',
+            'fk_pi_player_building',
             '{{%player_inventories}}',
-            'building_id',
-            '{{%buildings}}',
+            'player_building_id',
+            '{{%player_buildings}}',
             'id',
             'CASCADE',
             'CASCADE'

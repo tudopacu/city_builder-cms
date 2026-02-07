@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Building;
+use app\models\PlayerBuilding;
 use app\models\Player;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
@@ -20,16 +20,19 @@ use yii\widgets\ActiveForm;
         ['prompt' => 'Select Player']
     ) ?>
 
-    <?= $form->field($model, 'building_id')->dropDownList(
+    <?= $form->field($model, 'player_building_id')->dropDownList(
         ArrayHelper::map(
-            Building::find()
-                ->where(['building_category_id' => 3])
-                ->orderBy('name')
+            PlayerBuilding::find()
+                ->joinWith('building')
+                ->where(['buildings.building_category_id' => 3])
+                ->orderBy('player_buildings.id')
                 ->all(),
             'id',
-            'name'
+            function($model) {
+                return 'Building #' . $model->id . ' - ' . ($model->building ? $model->building->name : 'N/A') . ' (Player: ' . ($model->player ? $model->player->username : 'N/A') . ')';
+            }
         ),
-        ['prompt' => 'Select Storage Building']
+        ['prompt' => 'Select Player Building (Storage only)']
     ) ?>
 
     <?= $form->field($model, 'capacity')->textInput(['type' => 'number', 'min' => 1]) ?>

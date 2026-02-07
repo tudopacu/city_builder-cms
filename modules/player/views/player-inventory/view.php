@@ -35,8 +35,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => $model->player ? $model->player->username : $model->player_id,
             ],
             [
-                'attribute' => 'building_id',
-                'value' => $model->building ? $model->building->name : $model->building_id,
+                'attribute' => 'player_building_id',
+                'value' => function($model) {
+                    if ($model->playerBuilding && $model->playerBuilding->building) {
+                        return 'Building #' . $model->player_building_id . ' - ' . $model->playerBuilding->building->name;
+                    }
+                    return $model->player_building_id;
+                },
             ],
             'capacity',
             'created_at',

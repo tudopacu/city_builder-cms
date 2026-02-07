@@ -41,10 +41,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'attribute' => 'building_id',
-                'filter' => Html::input('number', $searchModel->formName() . '[building_id]', $searchModel->building_id, ['class' => 'form-control']),
+                'attribute' => 'player_building_id',
+                'filter' => Html::input('number', $searchModel->formName() . '[player_building_id]', $searchModel->player_building_id, ['class' => 'form-control']),
                 'value' => function($model) {
-                    return $model->building ? $model->building->name : $model->building_id;
+                    if ($model->playerBuilding && $model->playerBuilding->building) {
+                        return 'Building #' . $model->player_building_id . ' - ' . $model->playerBuilding->building->name;
+                    }
+                    return $model->player_building_id;
                 }
             ],
             [
