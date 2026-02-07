@@ -12,7 +12,6 @@ use Yii;
  * @property int $level
  * @property int $build_time_seconds
  * @property string|null $image_url
- * @property int $amount
  *
  * @property Building $building
  */
@@ -35,8 +34,8 @@ class BuildingLevel extends CoreModel
     {
         return [
             [['image_url'], 'default', 'value' => null],
-            [['building_id', 'level', 'build_time_seconds', 'amount'], 'required'],
-            [['building_id', 'level', 'build_time_seconds', 'amount'], 'integer'],
+            [['building_id', 'level', 'build_time_seconds'], 'required'],
+            [['building_id', 'level', 'build_time_seconds'], 'integer'],
             [['image_url'], 'string', 'max' => 255],
             [['building_id'], 'exist', 'skipOnError' => true, 'targetClass' => Building::class, 'targetAttribute' => ['building_id' => 'id']],
             [['created_at', 'updated_at'], 'safe'],
@@ -54,7 +53,6 @@ class BuildingLevel extends CoreModel
             'level' => 'Level',
             'build_time_seconds' => 'Build Time in Seconds',
             'image_url' => 'Image Url',
-            'amount' => 'Amount',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
