@@ -14,7 +14,7 @@ namespace app\models;
  * @property int $updated_at
  *
  * @property Map $maps
- * @property Tile $tiles
+ * @property Tile $tile
  */
 class Terrain extends CoreModel
 {
@@ -70,7 +70,7 @@ class Terrain extends CoreModel
     }
 
     /**
-     * Gets query for [[Tiles]].
+     * Gets query for [[Tile]].
      *
      * @return \yii\db\ActiveQuery|TileQuery
      */

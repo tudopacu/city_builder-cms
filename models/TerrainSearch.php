@@ -11,10 +11,6 @@ use app\models\Terrain;
  */
 class TerrainSearch extends Terrain
 {
-    public $tile_type;
-    public $map_name;
-
-
     /**
      * {@inheritdoc}
      */
@@ -22,7 +18,7 @@ class TerrainSearch extends Terrain
     {
         return [
             [['id', 'map_id', 'tile_id', 'x', 'y', 'created_at', 'updated_at'], 'integer'],
-            [['created_at_range', 'updated_at_range', 'tile_type', 'map_name'], 'safe'],
+            [['created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
 
@@ -47,9 +43,6 @@ class TerrainSearch extends Terrain
     {
         $query = Terrain::find();
 
-        $query->joinWith(['tile']);
-        $query->joinWith(['map']);
-
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -64,14 +57,9 @@ class TerrainSearch extends Terrain
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['like', 'tiles.type', $this->tile_type]);
-        $query->andFilterWhere(['like', 'maps.name', $this->map_name]);
-
         // grid filtering conditions
         $query->andFilterWhere([
-            'terrains.id' => $this->id,
-            'terrains.x' => $this->x,
-            'terrains.y' => $this->y,
+            'id' => $this->id,
         ]);
 
         if (!empty($this->created_at_range)) {
@@ -87,16 +75,6 @@ class TerrainSearch extends Terrain
             $end   = date('Y-m-d H:i:s', strtotime($end));
             $query->andFilterWhere(['between', 'terrains.updated_at', $start, $end]);
         }
-
-        $dataProvider->sort->attributes['tile_type'] = [
-            'asc' => ['tiles.type' => SORT_ASC],
-            'desc' => ['tiles.type' => SORT_DESC],
-        ];
-
-        $dataProvider->sort->attributes['map_name'] = [
-            'asc' => ['maps.name' => SORT_ASC],
-            'desc' => ['maps.name' => SORT_DESC],
-        ];
 
         return $dataProvider;
     }

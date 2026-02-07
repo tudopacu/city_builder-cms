@@ -1,7 +1,10 @@
 <?php
 
+use app\models\Map;
 use app\models\Terrain;
+use app\models\Tile;
 use kartik\daterange\DateRangePicker;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -34,28 +37,34 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::input('number', $searchModel->formName() . '[id]', $searchModel->id, ['class' => 'form-control']),
             ],
             [
-                'attribute' => 'map_name',
-                'label' => 'Map',
-                'value' => function ($model) {
+                'attribute' => 'map_id',
+                'format' => 'raw',
+                'value' => function($model) {
                     return $model->map
-                        ? $model->map->id . '-' . $model->map->name
-                        : '(not set)';
+                        ? Html::a($model->map->name, ['/map/manage/view', 'id' => $model->map_id])
+                        : $model->map_id;
                 },
-                'filter' => Html::activeTextInput($searchModel, 'map_name', [
-                    'class' => 'form-control',
-                ]),
+                'filter' => Html::dropDownList(
+                    $searchModel->formName() . '[map_id]',
+                    $searchModel->map_id,
+                    ArrayHelper::map(Map::find()->orderBy('name')->all(), 'id', 'name'),
+                    ['class' => 'form-control', 'prompt' => 'Select Map']
+                ),
             ],
             [
-                'attribute' => 'tile_type',
-                'label' => 'Tile',
-                'value' => function ($model) {
+                'attribute' => 'tile_id',
+                'format' => 'raw',
+                'value' => function($model) {
                     return $model->tile
-                        ? $model->tile->id . '-' . $model->tile->type
-                        : '(not set)';
+                        ? Html::a($model->tile->type, ['/map/tile/view', 'id' => $model->tile_id])
+                        : $model->tile_id;
                 },
-                'filter' => Html::activeTextInput($searchModel, 'tile_type', [
-                    'class' => 'form-control',
-                ]),
+                'filter' => Html::dropDownList(
+                    $searchModel->formName() . '[tile_id]',
+                    $searchModel->tile_id,
+                    ArrayHelper::map(Tile::find()->orderBy('type')->all(), 'id', 'type'),
+                    ['class' => 'form-control', 'prompt' => 'Select Tile']
+                ),
             ],
             'x',
             'y',

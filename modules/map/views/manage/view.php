@@ -38,4 +38,19 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+    <h3>Terrains</h3>
+    <?php if ($model->terrains): ?>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => array_map(function ($input) {
+                return [
+                    'label' => $input->tile ? $input->tile->type : 'Tile #' . $input->tile_id,
+                    'value' => 'Coordinates: x: ' . $input->x . ', y: ' . $input->y,
+                ];
+            }, $model->terrains),
+        ]) ?>
+    <?php else: ?>
+        <p class="text-muted">No terrains defined for this map.</p>
+    <?php endif; ?>
+
 </div>
