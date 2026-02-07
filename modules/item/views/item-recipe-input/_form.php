@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
             ItemRecipe::find()->with('outputItem')->all(), 
             'id', 
             function($recipe) {
-                return 'Recipe #' . $recipe->id . ' (Output: ' . ($recipe->outputItem ? $recipe->outputItem->name : 'N/A') . ')';
+                return 'Recipe #' . $recipe->id . ' (Item: ' . ($recipe->item ? $recipe->item->name : 'N/A') . ')';
             }
         ),
         ['prompt' => 'Select Recipe']

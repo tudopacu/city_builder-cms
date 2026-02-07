@@ -13,7 +13,7 @@ use Yii;
  * @property string|null $created_at
  * @property string|null $updated_at
  *
- * @property Item $outputItem
+ * @property Item $item
  * @property ItemRecipeInput[] $itemRecipeInputs
  * @property Item[] $items
  */
@@ -55,11 +55,11 @@ class ItemRecipe extends CoreModel
     }
 
     /**
-     * Gets query for [[OutputItem]].
+     * Gets query for [[Item]].
      *
      * @return \yii\db\ActiveQuery|ItemQuery
      */
-    public function getOutputItem()
+    public function getItem()
     {
         return $this->hasOne(Item::class, ['id' => 'item_id']);
     }

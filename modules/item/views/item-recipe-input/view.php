@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             [
                 'attribute' => 'recipe_id',
-                'value' => $model->recipe ? 'Recipe #' . $model->recipe->id . ' (Output: ' . ($model->recipe->outputItem ? $model->recipe->outputItem->name : 'N/A') . ')' : $model->recipe_id,
+                'value' => $model->recipe ? 'Recipe #' . $model->recipe->id . ' (Item: ' . ($model->recipe->item ? $model->recipe->item->name : 'N/A') . ')' : $model->recipe_id,
             ],
             [
                 'attribute' => 'input_item_id',

@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             [
                 'attribute' => 'item_id',
-                'value' => $model->outputItem ? $model->outputItem->name : $model->item_id,
+                'value' => $model->item ? $model->item->name : $model->item_id,
             ],
             'production_time_seconds',
             'created_at:datetime',

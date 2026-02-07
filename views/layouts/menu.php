@@ -18,7 +18,9 @@ class Menu
                     'label' => 'Players',
                     'items' => [
                         ['label' => 'Players', 'url' => ['/player']],
-                        ['label' => 'Players Buildings', 'url' => ['/player/player-building']],
+                        ['label' => 'Buildings', 'url' => ['/player/player-building']],
+                        ['label' => 'Inventories', 'url' => ['/player/player-inventory']],
+                        ['label' => 'Inventory Items', 'url' => ['/player/player-inventory-item']],
                     ],
                 ],
                 [
@@ -33,25 +35,18 @@ class Menu
                     'label' => 'Buildings',
                     'items' => [
                         ['label' => 'Buildings', 'url' => ['/building']],
-                        ['label' => 'Buildings Categories', 'url' => ['/building/building-category']],
-                        ['label' => 'Buildings Levels', 'url' => ['/building/building-level']],
-                        ['label' => 'Buildings Construction Costs', 'url' => ['/building/building-construction-cost']],
-                        ['label' => 'Buildings Production', 'url' => ['/building/building-production']],
+                        ['label' => 'Categories', 'url' => ['/building/building-category']],
+                        ['label' => 'Levels', 'url' => ['/building/building-level']],
+                        ['label' => 'Construction Costs', 'url' => ['/building/building-construction-cost']],
+                        ['label' => 'Production', 'url' => ['/building/building-production']],
                     ],
                 ],
                 [
                     'label' => 'Items',
                     'items' => [
                         ['label' => 'Items', 'url' => ['/item']],
-                        ['label' => 'Item Recipes', 'url' => ['/item/item-recipe']],
+                        ['label' => 'Recipes', 'url' => ['/item/item-recipe']],
                         ['label' => 'Recipes Inputs', 'url' => ['/item/item-recipe-input']],
-                    ],
-                ],
-                [
-                    'label' => 'Inventory',
-                    'items' => [
-                        ['label' => 'Player Inventories', 'url' => ['/player/player-inventory']],
-                        ['label' => 'Inventory Items', 'url' => ['/player/player-inventory-item']],
                     ],
                 ],
                 ['label' => 'News', 'url' => ['/news']]
