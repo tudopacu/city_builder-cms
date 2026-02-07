@@ -1,7 +1,9 @@
 <?php
 
+use app\models\Item;
 use app\models\PlayerInventoryItem;
 use kartik\daterange\DateRangePicker;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -35,14 +37,28 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'player_inventory_id',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return $model->playerInventory
+                        ? Html::a($model->playerInventory->playerBuilding->building->name . ' (ID: ' . $model->player_inventory_id . ')', ['/player/player-inventory/view', 'id' => $model->player_inventory_id])
+                        : '(not set)';
+                },
                 'filter' => Html::input('number', $searchModel->formName() . '[player_inventory_id]', $searchModel->player_inventory_id, ['class' => 'form-control']),
             ],
             [
                 'attribute' => 'item_id',
-                'filter' => Html::input('number', $searchModel->formName() . '[item_id]', $searchModel->item_id, ['class' => 'form-control']),
+                'format' => 'raw',
                 'value' => function($model) {
-                    return $model->item ? $model->item->name : $model->item_id;
-                }
+                    return $model->item
+                        ? Html::a($model->item->name, ['/item/manage/view', 'id' => $model->item_id])
+                        : '(not set)';
+                },
+                'filter' => Html::dropDownList(
+                    $searchModel->formName() . '[item_id]',
+                    $searchModel->item_id,
+                    ArrayHelper::map(Item::find()->orderBy('name')->all(), 'id', 'name'),
+                    ['class' => 'form-control', 'prompt' => 'Select Item']
+                ),
             ],
             [
                 'attribute' => 'quantity',

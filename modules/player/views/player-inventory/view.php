@@ -49,4 +49,19 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+    <h3>Inventory contents</h3>
+    <?php if ($model->playerInventoryItems): ?>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => array_map(function ($input) {
+                return [
+                    'label' => $input->item ? $input->item->name : 'Quantity #' . $input->quantity,
+                    'value' => $input->quantity,
+                ];
+            }, $model->playerInventoryItems),
+        ]) ?>
+    <?php else: ?>
+        <p class="text-muted">No items in this inventory.</p>
+    <?php endif; ?>
+
 </div>

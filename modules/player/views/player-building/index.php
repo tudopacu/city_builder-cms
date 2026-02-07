@@ -36,9 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'player_username',
                 'label' => 'Player',
+                'format' => 'raw',
                 'value' => function ($model) {
                     return $model->player
-                        ? $model->player->id . '-' . $model->player->username
+                        ? Html::a($model->player->id . '-' . $model->player->username, ['view', 'id' => $model->player->id])
                         : '(not set)';
                 },
                 'filter' => Html::activeTextInput($searchModel, 'player_username', [
@@ -48,9 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'building_name',
                 'label' => 'Building',
+                'format' => 'raw',
                 'value' => function ($model) {
                     return $model->building
-                        ? $model->building->id . '-' . $model->building->name
+                        ? Html::a($model->building->id . '-' . $model->building->name, ['/building/manage/view', 'id' => $model->building->id])
                         : '(not set)';
                 },
                 'filter' => Html::activeTextInput($searchModel, 'building_name', [
@@ -60,9 +62,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'map_name',
                 'label' => 'Map',
+                'format' => 'raw',
                 'value' => function ($model) {
                     return $model->map
-                        ? $model->map->id . '-' . $model->map->name
+                        ? Html::a($model->map->id . '-' . $model->map->name, ['/map/manage/view', 'id' => $model->map->id])
                         : '(not set)';
                 },
                 'filter' => Html::activeTextInput($searchModel, 'map_name', [

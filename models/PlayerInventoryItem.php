@@ -52,8 +52,8 @@ class PlayerInventoryItem extends CoreModel
     {
         return [
             'id' => 'ID',
-            'player_inventory_id' => 'Player Inventory ID',
-            'item_id' => 'Item ID',
+            'player_inventory_id' => 'Player Inventory',
+            'item_id' => 'Item',
             'quantity' => 'Quantity',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

@@ -1,7 +1,11 @@
 <?php
 
+use app\models\Building;
+use app\models\Player;
+use app\models\PlayerBuilding;
 use app\models\PlayerInventory;
 use kartik\daterange\DateRangePicker;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -35,20 +39,33 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'player_id',
-                'filter' => Html::input('number', $searchModel->formName() . '[player_id]', $searchModel->player_id, ['class' => 'form-control']),
+                'format' => 'raw',
                 'value' => function($model) {
-                    return $model->player ? $model->player->username : $model->player_id;
-                }
+                    return $model->player
+                        ? Html::a($model->player->username, ['/player/manage/view', 'id' => $model->player_id])
+                        : $model->player_id;
+                },
+                'filter' => Html::dropDownList(
+                    $searchModel->formName() . '[player_id]',
+                    $searchModel->player_id,
+                    ArrayHelper::map(Player::find()->orderBy('username')->all(), 'id', 'username'),
+                    ['class' => 'form-control', 'prompt' => 'Select Player']
+                ),
             ],
             [
                 'attribute' => 'player_building_id',
-                'filter' => Html::input('number', $searchModel->formName() . '[player_building_id]', $searchModel->player_building_id, ['class' => 'form-control']),
+                'format' => 'raw',
                 'value' => function($model) {
-                    if ($model->playerBuilding && $model->playerBuilding->building) {
-                        return 'Building #' . $model->player_building_id . ' - ' . $model->playerBuilding->building->name;
-                    }
-                    return $model->player_building_id;
-                }
+                    return $model->playerBuilding
+                        ? Html::a($model->playerBuilding->building->name, ['/player/player-building/view', 'id' => $model->player_building_id])
+                        : $model->player_building_id;
+                },
+                'filter' => Html::dropDownList(
+                    $searchModel->formName() . '[player_building_id]',
+                    $searchModel->player_building_id,
+                    ArrayHelper::map(PlayerBuilding::find()->orderBy('building_id')->all(), 'player_building_id', 'building.name'),
+                    ['class' => 'form-control', 'prompt' => 'Select Building']
+                ),
             ],
             [
                 'attribute' => 'capacity',

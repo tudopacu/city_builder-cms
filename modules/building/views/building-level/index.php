@@ -1,7 +1,9 @@
 <?php
 
+use app\models\Building;
 use app\models\BuildingLevel;
 use kartik\daterange\DateRangePicker;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -35,9 +37,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'building_id',
-                'value' => function ($model) {
-                    return $model->building->name ?? '(not set)';
+                'format' => 'raw',
+                'value' => function($model) {
+                    return $model->building
+                        ? Html::a($model->building->name, ['/building/manage/view', 'id' => $model->building->id])
+                        : '(not set)';
                 },
+                'filter' => Html::dropDownList(
+                    $searchModel->formName() . '[building_id]',
+                    $searchModel->building_id,
+                    ArrayHelper::map(Building::find()->orderBy('name')->all(), 'id', 'name'),
+                    ['class' => 'form-control', 'prompt' => 'Select Building']
+                ),
             ],
             [
                 'attribute' => 'level',

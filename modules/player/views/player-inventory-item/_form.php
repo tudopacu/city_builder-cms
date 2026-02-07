@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
             PlayerInventory::find()->orderBy('id')->all(),
             'id',
             function($model) {
-                return 'Inventory #' . $model->id . ' (' . ($model->building ? $model->building->name : 'N/A') . ')';
+                return 'Inventory #' . $model->id . ' (' . ($model->playerBuilding ? $model->playerBuilding->building->name : 'N/A') . ')';
             }
         ),
         ['prompt' => 'Select Player Inventory']
