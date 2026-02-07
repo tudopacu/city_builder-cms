@@ -38,8 +38,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'building_id',
+                'format' => 'raw',
                 'value' => function($model) {
-                    return $model->building ? $model->building->name : $model->building_id;
+                    return $model->building
+                        ? Html::a($model->building->name, ['/building/manage/view', 'id' => $model->building_id])
+                        : $model->building_id;
                 },
                 'filter' => Html::dropDownList(
                     $searchModel->formName() . '[building_id]',
@@ -50,8 +53,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'item_id',
+                'format' => 'raw',
                 'value' => function($model) {
-                    return $model->item ? $model->item->name : $model->item_id;
+                    return $model->item
+                        ? Html::a($model->item->name, ['/item/manage/view', 'id' => $model->item_id])
+                        : $model->item_id;
                 },
                 'filter' => Html::dropDownList(
                     $searchModel->formName() . '[item_id]',

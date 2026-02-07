@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function($model) {
                     return $model->building
-                        ? Html::a($model->building->name, ['/building/manage/view', 'id' => $model->building->id])
+                        ? Html::a($model->building->name, ['/building/manage/view', 'id' => $model->building_id])
                         : '(not set)';
                 },
                 'filter' => Html::dropDownList(
@@ -54,7 +54,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'level',
                 'filter' => Html::input('number', $searchModel->formName() . '[level]', $searchModel->level, ['class' => 'form-control']),
             ],
-            'build_time_seconds',
+            [
+                'attribute' => 'build_time_seconds',
+                'filter' => Html::input('number', $searchModel->formName() . '[build_time_seconds]', $searchModel->build_time_seconds, ['class' => 'form-control']),
+            ],
             'image_url:url',
             [
                 'attribute' => 'created_at',
