@@ -3,6 +3,7 @@
 use app\models\Building;
 use app\models\BuildingProduction;
 use app\models\Item;
+use kartik\daterange\DateRangePicker;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -65,6 +66,42 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'quantity',
                 'filter' => Html::input('number', $searchModel->formName() . '[quantity]', $searchModel->quantity, ['class' => 'form-control']),
+            ],
+            [
+                'attribute' => 'created_at',
+                'format' => 'datetime',
+                'filter' => DateRangePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'created_at_range',
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'timePicker' => true,
+                        'timePicker24Hour' => true,
+                        'timePickerIncrement' => 15,
+                        'locale' => [
+                            'format' => 'Y-m-d H:i',
+                            'separator' => ' - ',
+                        ],
+                    ],
+                ]),
+            ],
+            [
+                'attribute' => 'updated_at',
+                'format' => 'datetime',
+                'filter' => DateRangePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'updated_at_range',
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'timePicker' => true,
+                        'timePicker24Hour' => true,
+                        'timePickerIncrement' => 15,
+                        'locale' => [
+                            'format' => 'Y-m-d H:i',
+                            'separator' => ' - ',
+                        ],
+                    ],
+                ]),
             ],
             [
                 'class' => ActionColumn::className(),

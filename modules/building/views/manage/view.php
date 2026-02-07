@@ -25,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
         <?= Html::a('Add Construction Cost', ['building-construction-cost/create', 'building_id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Add Construction Production', ['building-production/create', 'building_id' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -61,6 +62,21 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     <?php else: ?>
         <p class="text-muted">No costs defined for this building.</p>
+    <?php endif; ?>
+
+    <h3>Building production</h3>
+    <?php if ($model->buildingProductions): ?>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => array_map(function ($input) {
+                return [
+                    'label' => $input->item ? $input->item->name : 'Item #' . $input->item_id,
+                    'value' => $input->quantity,
+                ];
+            }, $model->buildingProductions),
+        ]) ?>
+    <?php else: ?>
+        <p class="text-muted">No production items defined for this building.</p>
     <?php endif; ?>
 
 </div>

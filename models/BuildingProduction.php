@@ -50,8 +50,8 @@ class BuildingProduction extends CoreModel
     {
         return [
             'id' => 'ID',
-            'building_id' => 'Building ID',
-            'item_id' => 'Item ID',
+            'building_id' => 'Building',
+            'item_id' => 'Item',
             'production_time_seconds' => 'Production Time (seconds)',
             'quantity' => 'Quantity',
             'created_at' => 'Created At',

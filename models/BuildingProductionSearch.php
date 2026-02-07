@@ -16,8 +16,8 @@ class BuildingProductionSearch extends BuildingProduction
     public function rules()
     {
         return [
-            [['id', 'building_id', 'item_id', 'production_time_seconds', 'quantity'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['id', 'building_id', 'item_id', 'production_time_seconds', 'quantity', 'created_at', 'updated_at'], 'integer'],
+            [['created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
 
@@ -55,6 +55,20 @@ class BuildingProductionSearch extends BuildingProduction
             return $dataProvider;
         }
 
+        if (!empty($this->created_at_range)) {
+            [$start, $end] = explode(' - ', $this->created_at_range);
+            $start = date('Y-m-d H:i:s', strtotime($start));
+            $end   = date('Y-m-d H:i:s', strtotime($end));
+            $query->andFilterWhere(['between', 'created_at', $start, $end]);
+        }
+
+        if (!empty($this->updated_at_range)) {
+            [$start, $end] = explode(' - ', $this->updated_at_range);
+            $start = date('Y-m-d H:i:s', strtotime($start));
+            $end   = date('Y-m-d H:i:s', strtotime($end));
+            $query->andFilterWhere(['between', 'updated_at', $start, $end]);
+        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -62,8 +76,6 @@ class BuildingProductionSearch extends BuildingProduction
             'item_id' => $this->item_id,
             'production_time_seconds' => $this->production_time_seconds,
             'quantity' => $this->quantity,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
         return $dataProvider;
