@@ -8,11 +8,13 @@ use Yii;
  * This is the model class for table "player_inventories".
  *
  * @property int $id
+ * @property int $player_id
  * @property int $building_id
  * @property int $capacity
  * @property string|null $created_at
  * @property string|null $updated_at
  *
+ * @property Player $player
  * @property Building $building
  * @property PlayerInventoryItem[] $playerInventoryItems
  */
@@ -35,9 +37,10 @@ class PlayerInventory extends CoreModel
     {
         return [
             [['updated_at'], 'default', 'value' => null],
-            [['building_id', 'capacity'], 'required'],
-            [['building_id', 'capacity'], 'integer'],
+            [['player_id', 'building_id', 'capacity'], 'required'],
+            [['player_id', 'building_id', 'capacity'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
+            [['player_id'], 'exist', 'skipOnError' => true, 'targetClass' => Player::class, 'targetAttribute' => ['player_id' => 'id']],
             [['building_id'], 'exist', 'skipOnError' => true, 'targetClass' => Building::class, 'targetAttribute' => ['building_id' => 'id']],
             [['building_id'], 'validateStorageBuilding'],
             [['capacity'], 'integer', 'min' => 1],
@@ -64,11 +67,22 @@ class PlayerInventory extends CoreModel
     {
         return [
             'id' => 'ID',
+            'player_id' => 'Player ID',
             'building_id' => 'Building ID',
             'capacity' => 'Capacity',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * Gets query for [[Player]].
+     *
+     * @return \yii\db\ActiveQuery|PlayerQuery
+     */
+    public function getPlayer()
+    {
+        return $this->hasOne(Player::class, ['id' => 'player_id']);
     }
 
     /**

@@ -17,7 +17,7 @@ class PlayerInventorySearch extends PlayerInventory
     public function rules()
     {
         return [
-            [['id', 'building_id', 'capacity'], 'integer'],
+            [['id', 'player_id', 'building_id', 'capacity'], 'integer'],
             [['created_at', 'updated_at', 'created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
@@ -60,6 +60,7 @@ class PlayerInventorySearch extends PlayerInventory
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'player_id' => $this->player_id,
             'building_id' => $this->building_id,
             'capacity' => $this->capacity,
         ]);

@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Building;
+use app\models\Player;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
@@ -13,6 +14,11 @@ use yii\widgets\ActiveForm;
 <div class="player-inventory-form">
 
     <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'player_id')->dropDownList(
+        ArrayHelper::map(Player::find()->orderBy('username')->all(), 'id', 'username'),
+        ['prompt' => 'Select Player']
+    ) ?>
 
     <?= $form->field($model, 'building_id')->dropDownList(
         ArrayHelper::map(

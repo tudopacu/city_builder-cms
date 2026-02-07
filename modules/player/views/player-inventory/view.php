@@ -31,6 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             [
+                'attribute' => 'player_id',
+                'value' => $model->player ? $model->player->username : $model->player_id,
+            ],
+            [
                 'attribute' => 'building_id',
                 'value' => $model->building ? $model->building->name : $model->building_id,
             ],

@@ -34,6 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::input('number', $searchModel->formName() . '[id]', $searchModel->id, ['class' => 'form-control']),
             ],
             [
+                'attribute' => 'player_id',
+                'filter' => Html::input('number', $searchModel->formName() . '[player_id]', $searchModel->player_id, ['class' => 'form-control']),
+                'value' => function($model) {
+                    return $model->player ? $model->player->username : $model->player_id;
+                }
+            ],
+            [
                 'attribute' => 'building_id',
                 'filter' => Html::input('number', $searchModel->formName() . '[building_id]', $searchModel->building_id, ['class' => 'form-control']),
                 'value' => function($model) {
