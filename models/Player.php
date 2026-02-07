@@ -17,6 +17,8 @@ use yii\db\Expression;
  * @property string|null $created_at
  * @property string|null $last_login_at
  * @property string $status
+ *
+ * @property PlayerBuilding[] $PlayerBuildings
  */
 class Player extends CoreModel
 {
@@ -170,5 +172,15 @@ class Player extends CoreModel
     public function setStatusToSuspended()
     {
         $this->status = self::STATUS_SUSPENDED;
+    }
+
+    /**
+     * Gets query for [[PlayerBuildings]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPlayerBuildings()
+    {
+        return $this->hasMany(PlayerBuilding::class, ['player_id' => 'id']);
     }
 }

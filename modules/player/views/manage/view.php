@@ -38,4 +38,19 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+    <h3>Buildings</h3>
+    <?php if ($model->playerBuildings): ?>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => array_map(function ($input) {
+                return [
+                    'label' => $input->building ? $input->building->name : 'Building #' . $input->id,
+                    'value' => 'x: ' . $input->x . ', y: ' . $input->y . ' (Map: ' . ($input->map->name ?? 'N/A') . ')',
+                ];
+            }, $model->playerBuildings),
+        ]) ?>
+    <?php else: ?>
+        <p class="text-muted">This player has no buildings.</p>
+    <?php endif; ?>
+
 </div>

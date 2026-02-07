@@ -11,11 +11,6 @@ use app\models\PlayerBuilding;
  */
 class PlayerBuildingSearch extends PlayerBuilding
 {
-    public $player_username;
-    public $building_name;
-    public $map_name;
-    public $building_level;
-
 
     /**
      * {@inheritdoc}
@@ -24,7 +19,7 @@ class PlayerBuildingSearch extends PlayerBuilding
     {
         return [
             [['id', 'player_id', 'building_id', 'map_id', 'building_level_id', 'x', 'y', 'created_at', 'updated_at'], 'integer'],
-            [['created_at_range', 'updated_at_range', 'player_username', 'building_name', 'map_name', 'building_level'], 'safe'],
+            [['created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
 
@@ -49,11 +44,6 @@ class PlayerBuildingSearch extends PlayerBuilding
     {
         $query = PlayerBuilding::find();
 
-        $query->joinWith(['player']);
-        $query->joinWith(['building']);
-        $query->joinWith(['map']);
-        $query->joinWith(['buildingLevel']);
-
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -67,11 +57,6 @@ class PlayerBuildingSearch extends PlayerBuilding
             // $query->where('0=1');
             return $dataProvider;
         }
-
-        $query->andFilterWhere(['like', 'players.username', $this->player_username]);
-        $query->andFilterWhere(['like', 'buildings.name', $this->building_name]);
-        $query->andFilterWhere(['like', 'maps.name', $this->map_name]);
-        $query->andFilterWhere(['like', 'building_levels.level', $this->building_level]);
 
         if (!empty($this->created_at_range)) {
             [$start, $end] = explode(' - ', $this->created_at_range);
@@ -89,30 +74,15 @@ class PlayerBuildingSearch extends PlayerBuilding
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'player_buildings.id' => $this->id,
-            'player_buildings.x' => $this->x,
-            'player_buildings.y' => $this->y,
+            'id' => $this->id,
+            'x' => $this->x,
+            'y' => $this->y,
+            'building_level_id' => $this->building_level_id,
+            'map_id' => $this->map_id,
+            'building_id' => $this->building_id,
+            'player_id' => $this->player_id,
         ]);
 
-        $dataProvider->sort->attributes['player_username'] = [
-            'asc' => ['players.username' => SORT_ASC],
-            'desc' => ['players.username' => SORT_DESC],
-        ];
-
-        $dataProvider->sort->attributes['building_name'] = [
-            'asc' => ['buildings.name' => SORT_ASC],
-            'desc' => ['buildings.name' => SORT_DESC],
-        ];
-
-        $dataProvider->sort->attributes['map_name'] = [
-            'asc' => ['maps.name' => SORT_ASC],
-            'desc' => ['maps.name' => SORT_DESC],
-        ];
-
-        $dataProvider->sort->attributes['building_level'] = [
-            'asc' => ['building_levels.level' => SORT_ASC],
-            'desc' => ['building_levels.level' => SORT_DESC],
-        ];
 
         return $dataProvider;
     }

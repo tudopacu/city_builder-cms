@@ -1,7 +1,12 @@
 <?php
 
+use app\models\Building;
+use app\models\BuildingLevel;
+use app\models\Map;
+use app\models\Player;
 use app\models\PlayerBuilding;
 use kartik\daterange\DateRangePicker;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -34,55 +39,63 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::input('number', $searchModel->formName() . '[id]', $searchModel->id, ['class' => 'form-control']),
             ],
             [
-                'attribute' => 'player_username',
+                'attribute' => 'player_id',
                 'label' => 'Player',
                 'format' => 'raw',
                 'value' => function ($model) {
                     return $model->player
-                        ? Html::a($model->player->id . '-' . $model->player->username, ['view', 'id' => $model->player->id])
+                        ? Html::a($model->player->username, ['view', 'id' => $model->player->id])
                         : '(not set)';
                 },
-                'filter' => Html::activeTextInput($searchModel, 'player_username', [
-                    'class' => 'form-control',
-                ]),
+                'filter' => Html::dropDownList(
+                    $searchModel->formName() . '[player_id]',
+                    $searchModel->player_id,
+                    ArrayHelper::map(Player::find()->orderBy('username')->all(), 'id', 'username'),
+                    ['class' => 'form-control', 'prompt' => 'Select Player']
+                ),
             ],
             [
-                'attribute' => 'building_name',
+                'attribute' => 'building_id',
                 'label' => 'Building',
                 'format' => 'raw',
                 'value' => function ($model) {
                     return $model->building
-                        ? Html::a($model->building->id . '-' . $model->building->name, ['/building/manage/view', 'id' => $model->building->id])
+                        ? Html::a($model->building->name, ['/building/manage/view', 'id' => $model->building->id])
                         : '(not set)';
                 },
-                'filter' => Html::activeTextInput($searchModel, 'building_name', [
-                    'class' => 'form-control',
-                ]),
+                'filter' => Html::dropDownList(
+                    $searchModel->formName() . '[building_id]',
+                    $searchModel->building_id,
+                    ArrayHelper::map(Building::find()->orderBy('name')->all(), 'id', 'name'),
+                    ['class' => 'form-control', 'prompt' => 'Select Building']
+                ),
             ],
             [
-                'attribute' => 'map_name',
+                'attribute' => 'map_id',
                 'label' => 'Map',
                 'format' => 'raw',
                 'value' => function ($model) {
                     return $model->map
-                        ? Html::a($model->map->id . '-' . $model->map->name, ['/map/manage/view', 'id' => $model->map->id])
+                        ? Html::a($model->map->name, ['/map/manage/view', 'id' => $model->map->id])
                         : '(not set)';
                 },
-                'filter' => Html::activeTextInput($searchModel, 'map_name', [
-                    'class' => 'form-control',
-                ]),
+                'filter' => Html::dropDownList(
+                    $searchModel->formName() . '[map_id]',
+                    $searchModel->map_id,
+                    ArrayHelper::map(Map::find()->orderBy('name')->all(), 'id', 'name'),
+                    ['class' => 'form-control', 'prompt' => 'Select Map']
+                ),
             ],
             [
-                'attribute' => 'building_level',
+                'attribute' => 'building_level_id',
                 'label' => 'Level',
                 'value' => function ($model) {
                     return $model->buildingLevel
                         ? $model->buildingLevel->level
                         : '(not set)';
                 },
-                'filter' => Html::activeTextInput($searchModel, 'building_level', [
-                    'class' => 'form-control',
-                ]),
+                //todo this filter is not working, because building levels are not unique across buildings. To make it work, we would need to filter by building_id + building_level_id, which requires a custom filter input and additional logic in the search model.
+                'filter' => Html::input('number', $searchModel->formName() . '[building_level_id]', $searchModel->building_level_id, ['class' => 'form-control']),
             ],
             [
                 'attribute' => 'x',

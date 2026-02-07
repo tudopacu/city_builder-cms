@@ -36,6 +36,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'username',
             'email:email',
             [
+                'attribute' => 'status',
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'status',
+                    Player::PLAYER_STATUS,
+                    ['class' => 'form-control', 'prompt' => 'Select a status']
+                ),
+            ],
+            [
                 'attribute' => 'created_at',
                 'format' => 'datetime',
                 'filter' => DateRangePicker::widget([
@@ -71,7 +80,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ]),
             ],
-            'status',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Player $model, $key, $index, $column) {
