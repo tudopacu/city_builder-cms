@@ -46,6 +46,13 @@ class Menu
                         ['label' => 'Recipes Inputs', 'url' => ['/item/item-recipe-input']],
                     ],
                 ],
+                [
+                    'label' => 'Inventory',
+                    'items' => [
+                        ['label' => 'Player Inventories', 'url' => ['/player/player-inventory']],
+                        ['label' => 'Inventory Items', 'url' => ['/player/player-inventory-item']],
+                    ],
+                ],
                 ['label' => 'News', 'url' => ['/news']]
             ];
         }
