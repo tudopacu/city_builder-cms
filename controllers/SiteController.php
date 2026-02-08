@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use yii\helpers\FileHelper;
 
 class SiteController extends Controller
 {
@@ -61,7 +62,26 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $absPath = Yii::getAlias('@webroot/assets/tup');
+        $relativeUrl = Yii::getAlias('@web/assets/tup');
+
+        $items = [];
+
+        if (is_dir($absPath)) {
+            $files = FileHelper::findFiles($absPath, [
+                'only' => ['*.jpg', '*.jpeg', '*.png', '*.gif', '*.webp'],
+                'recursive' => false,
+            ]);
+
+            foreach ($files as $file) {
+                $fileName = basename($file);
+                $items[] = [
+                    'content' => '<img src="' . $relativeUrl . '/' . $fileName . '" class="d-block w-100" style="height:800px; object-fit:cover;" />',
+                ];
+            }
+        }
+
+        return $this->render('index', ['items' => $items, 'relativeUrl' => $relativeUrl]);
     }
 
     /**
