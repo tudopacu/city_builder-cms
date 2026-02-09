@@ -42,6 +42,7 @@ class PlayerInventoryItem extends CoreModel
             [['player_inventory_id'], 'exist', 'skipOnError' => true, 'targetClass' => PlayerInventory::class, 'targetAttribute' => ['player_inventory_id' => 'id']],
             [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Item::class, 'targetAttribute' => ['item_id' => 'id']],
             [['quantity'], 'integer', 'min' => 0],
+            [['quantity'], 'validateInventoryCapacity', 'on' => 'create'],
         ];
     }
 
@@ -87,6 +88,46 @@ class PlayerInventoryItem extends CoreModel
     public static function find()
     {
         return new PlayerInventoryItemQuery(get_called_class());
+    }
+
+    /**
+     * Validates that the quantity does not exceed the available inventory capacity.
+     * Available capacity = total capacity - sum of existing items.
+     *
+     * @param string $attribute
+     * @param array $params
+     */
+    public function validateInventoryCapacity($attribute, $params)
+    {
+        if ($this->player_inventory_id === null) {
+            return;
+        }
+
+        $playerInventory = PlayerInventory::findOne($this->player_inventory_id);
+        
+        if ($playerInventory === null) {
+            return;
+        }
+
+        // Calculate the sum of existing quantities in the inventory
+        $existingQuantity = PlayerInventoryItem::find()
+            ->where(['player_inventory_id' => $this->player_inventory_id])
+            ->sum('quantity');
+
+        if ($existingQuantity === null) {
+            $existingQuantity = 0;
+        }
+
+        // Calculate available capacity
+        $availableCapacity = $playerInventory->capacity - $existingQuantity;
+
+        // Check if the new quantity exceeds available capacity
+        if ($this->$attribute > $availableCapacity) {
+            $this->addError(
+                $attribute,
+                "The quantity ({$this->$attribute}) exceeds the available inventory capacity ({$availableCapacity}). Total capacity: {$playerInventory->capacity}, Already used: {$existingQuantity}."
+            );
+        }
     }
 
 }

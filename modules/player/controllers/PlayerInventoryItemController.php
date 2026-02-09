@@ -67,7 +67,7 @@ class PlayerInventoryItemController extends Controller
      */
     public function actionCreate()
     {
-        $model = new PlayerInventoryItem();
+        $model = new PlayerInventoryItem(['scenario' => 'create']);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
