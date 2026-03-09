@@ -49,7 +49,8 @@ class Menu
                         ['label' => 'Recipes Inputs', 'url' => ['/item/item-recipe-input']],
                     ],
                 ],
-                ['label' => 'News', 'url' => ['/news']]
+                ['label' => 'News', 'url' => ['/news']],
+                ['label' => 'Redis', 'url' => ['/redis']],
             ];
         }
 
