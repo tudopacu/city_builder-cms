@@ -11,6 +11,8 @@ use app\models\PlayerBuildingProduction;
  */
 class PlayerBuildingProductionSearch extends PlayerBuildingProduction
 {
+    public $end_time_range;
+
     /**
      * {@inheritdoc}
      */
