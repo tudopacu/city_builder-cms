@@ -63,7 +63,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::dropDownList(
                     $searchModel->formName() . '[player_building_id]',
                     $searchModel->player_building_id,
-                    ArrayHelper::map(PlayerBuilding::find()->orderBy('building_id')->all(), 'player_building_id', 'building.name'),
+                    ArrayHelper::map(
+                        PlayerBuilding::find()
+                            ->joinWith('building')
+                            ->where(['buildings.building_category_id' => 3])
+                            ->orderBy('buildings.name')
+                            ->all(),
+                        'id',
+                        function($model) {
+                            return 'Building #' . $model->id . ' - ' . ($model->building ? $model->building->name : 'N/A') . ' (Player: ' . ($model->player ? $model->player->username : 'N/A') . ')';
+                        }
+                    ),
                     ['class' => 'form-control', 'prompt' => 'Select Building']
                 ),
             ],
