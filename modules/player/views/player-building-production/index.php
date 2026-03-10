@@ -1,9 +1,8 @@
 <?php
 
-use app\models\Building;
-use app\models\Player;
+use app\models\Item;
 use app\models\PlayerBuilding;
-use app\models\PlayerInventory;
+use app\models\PlayerBuildingProduction;
 use kartik\daterange\DateRangePicker;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -12,18 +11,18 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
-/** @var app\models\PlayerInventorySearch $searchModel */
+/** @var app\models\PlayerBuildingProductionSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Player Inventories';
+$this->title = 'Player Building Productions';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="player-inventory-index">
+<div class="player-building-production-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Player Inventory', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Player Building Production', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -38,48 +37,47 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::input('number', $searchModel->formName() . '[id]', $searchModel->id, ['class' => 'form-control']),
             ],
             [
-                'attribute' => 'player_id',
-                'format' => 'raw',
-                'value' => function($model) {
-                    return $model->player
-                        ? Html::a($model->player->username, ['/player/manage/view', 'id' => $model->player_id])
-                        : $model->player_id;
-                },
-                'filter' => Html::dropDownList(
-                    $searchModel->formName() . '[player_id]',
-                    $searchModel->player_id,
-                    ArrayHelper::map(Player::find()->orderBy('username')->all(), 'id', 'username'),
-                    ['class' => 'form-control', 'prompt' => 'Select Player']
-                ),
-            ],
-            [
                 'attribute' => 'player_building_id',
                 'format' => 'raw',
                 'value' => function($model) {
                     return $model->playerBuilding
-                        ? Html::a($model->playerBuilding->building->name, ['/player/player-building/view', 'id' => $model->player_building_id])
-                        : $model->player_building_id;
+                        ? Html::a($model->playerBuilding->building->name . ' (ID: ' . $model->player_building_id . ')', ['/player/player-building/view', 'id' => $model->player_building_id])
+                        : '(not set)';
+                },
+                'filter' => Html::input('number', $searchModel->formName() . '[player_building_id]', $searchModel->player_building_id, ['class' => 'form-control']),
+            ],
+            [
+                'attribute' => 'item_id',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return $model->item
+                        ? Html::a($model->item->name, ['/item/manage/view', 'id' => $model->item_id])
+                        : '(not set)';
                 },
                 'filter' => Html::dropDownList(
-                    $searchModel->formName() . '[player_building_id]',
-                    $searchModel->player_building_id,
-                    ArrayHelper::map(
-                        PlayerBuilding::find()
-                            ->joinWith('building')
-                            ->where(['buildings.building_category_id' => 3])
-                            ->orderBy('buildings.name')
-                            ->all(),
-                        'id',
-                        function($model) {
-                            return 'Building #' . $model->id . ' - ' . ($model->building ? $model->building->name : 'N/A') . ' (Player: ' . ($model->player ? $model->player->username : 'N/A') . ')';
-                        }
-                    ),
-                    ['class' => 'form-control', 'prompt' => 'Select Building']
+                    $searchModel->formName() . '[item_id]',
+                    $searchModel->item_id,
+                    ArrayHelper::map(Item::find()->orderBy('name')->all(), 'id', 'name'),
+                    ['class' => 'form-control', 'prompt' => 'Select Item']
                 ),
             ],
             [
-                'attribute' => 'capacity',
-                'filter' => Html::input('number', $searchModel->formName() . '[capacity]', $searchModel->capacity, ['class' => 'form-control']),
+                'attribute' => 'end_time',
+                'format' => 'datetime',
+                'filter' => DateRangePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'end_time_range',
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'timePicker' => true,
+                        'timePicker24Hour' => true,
+                        'timePickerIncrement' => 15,
+                        'locale' => [
+                            'format' => 'Y-m-d H:i',
+                            'separator' => ' - ',
+                        ],
+                    ],
+                ]),
             ],
             [
                 'attribute' => 'created_at',
@@ -119,7 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, PlayerInventory $model, $key, $index, $column) {
+                'urlCreator' => function ($action, PlayerBuildingProduction $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

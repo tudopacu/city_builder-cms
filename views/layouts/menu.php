@@ -21,6 +21,7 @@ class Menu
                         ['label' => 'Buildings', 'url' => ['/player/player-building']],
                         ['label' => 'Inventories', 'url' => ['/player/player-inventory']],
                         ['label' => 'Inventory Items', 'url' => ['/player/player-inventory-item']],
+                        ['label' => 'Productions', 'url' => ['/player/player-building-production']],
                     ],
                 ],
                 [
