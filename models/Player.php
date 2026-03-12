@@ -19,6 +19,7 @@ use yii\db\Expression;
  * @property string $status
  *
  * @property PlayerBuilding[] $PlayerBuildings
+ * @property Intersection[] $intersections
  */
 class Player extends CoreModel
 {
@@ -182,5 +183,15 @@ class Player extends CoreModel
     public function getPlayerBuildings()
     {
         return $this->hasMany(PlayerBuilding::class, ['player_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Intersections]].
+     *
+     * @return \yii\db\ActiveQuery|IntersectionQuery
+     */
+    public function getIntersections()
+    {
+        return $this->hasMany(Intersection::class, ['player_id' => 'id']);
     }
 }

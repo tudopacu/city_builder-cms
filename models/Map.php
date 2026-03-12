@@ -13,6 +13,7 @@ namespace app\models;
  * @property int $updated_at
  *
  * @property Terrain[] $terrains
+ * @property Intersection[] $intersections
  */
 class Map extends CoreModel
 {
@@ -61,6 +62,16 @@ class Map extends CoreModel
     public function getTerrains()
     {
         return $this->hasMany(Terrain::class, ['map_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Intersections]].
+     *
+     * @return \yii\db\ActiveQuery|IntersectionQuery
+     */
+    public function getIntersections()
+    {
+        return $this->hasMany(Intersection::class, ['map_id' => 'id']);
     }
 
     /**
