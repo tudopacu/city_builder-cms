@@ -35,6 +35,9 @@ $config = [
         'redis' => [
             'class' => 'app\modules\redis\redis',
         ],
+        'road' => [
+            'class' => 'app\modules\road\road',
+        ],
     ],
     'components' => [
         'request' => [

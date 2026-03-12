@@ -51,6 +51,14 @@ class Menu
                     ],
                 ],
                 ['label' => 'News', 'url' => ['/news']],
+                [
+                    'label' => 'Roads',
+                    'items' => [
+                        ['label' => 'Road Types', 'url' => ['/road']],
+                        ['label' => 'Roads', 'url' => ['/road/road']],
+                        ['label' => 'Intersections', 'url' => ['/road/intersection']],
+                    ],
+                ],
                 ['label' => 'Redis', 'url' => ['/redis']],
             ];
         }
