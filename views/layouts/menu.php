@@ -52,6 +52,7 @@ class Menu
                 ],
                 ['label' => 'News', 'url' => ['/news']],
                 ['label' => 'Redis', 'url' => ['/redis']],
+                ['label' => 'Smartbill', 'url' => ['/smartbill']],
             ];
         }
 

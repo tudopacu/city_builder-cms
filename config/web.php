@@ -35,6 +35,9 @@ $config = [
         'redis' => [
             'class' => 'app\modules\redis\redis',
         ],
+        'smartbill' => [
+            'class' => 'app\modules\smartbill\smartbill',
+        ],
     ],
     'components' => [
         'request' => [
