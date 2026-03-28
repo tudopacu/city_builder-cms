@@ -10,11 +10,13 @@ namespace app\models;
  * @property int|null $player_id
  * @property int $x
  * @property int $y
+ * @property int|null $intersection_type_id
  * @property string|null $created_at
  * @property string|null $updated_at
  *
  * @property Map $map
  * @property Player $player
+ * @property IntersectionType $intersectionType
  * @property Road[] $startRoads
  * @property Road[] $endRoads
  */
@@ -34,12 +36,13 @@ class Intersection extends CoreModel
     public function rules()
     {
         return [
-            [['map_id', 'player_id', 'updated_at'], 'default', 'value' => null],
+            [['map_id', 'player_id', 'intersection_type_id', 'updated_at'], 'default', 'value' => null],
             [['x', 'y'], 'required'],
-            [['map_id', 'player_id', 'x', 'y'], 'integer'],
+            [['map_id', 'player_id', 'x', 'y', 'intersection_type_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['map_id'], 'exist', 'skipOnError' => true, 'targetClass' => Map::class, 'targetAttribute' => ['map_id' => 'id']],
             [['player_id'], 'exist', 'skipOnError' => true, 'targetClass' => Player::class, 'targetAttribute' => ['player_id' => 'id']],
+            [['intersection_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => IntersectionType::class, 'targetAttribute' => ['intersection_type_id' => 'id']],
         ];
     }
 
@@ -54,6 +57,7 @@ class Intersection extends CoreModel
             'player_id' => 'Player',
             'x' => 'X',
             'y' => 'Y',
+            'intersection_type_id' => 'Intersection Type',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -77,6 +81,16 @@ class Intersection extends CoreModel
     public function getPlayer()
     {
         return $this->hasOne(Player::class, ['id' => 'player_id']);
+    }
+
+    /**
+     * Gets query for [[IntersectionType]].
+     *
+     * @return \yii\db\ActiveQuery|IntersectionTypeQuery
+     */
+    public function getIntersectionType()
+    {
+        return $this->hasOne(IntersectionType::class, ['id' => 'intersection_type_id']);
     }
 
     /**

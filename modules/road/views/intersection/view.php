@@ -40,6 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'x',
             'y',
+            [
+                'attribute' => 'intersection_type_id',
+                'value' => $model->intersectionType ? $model->intersectionType->type : $model->intersection_type_id,
+            ],
             'created_at:datetime',
             'updated_at:datetime',
         ],

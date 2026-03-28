@@ -1,5 +1,6 @@
 <?php
 
+use app\models\IntersectionType;
 use app\models\Map;
 use app\models\Player;
 use yii\helpers\ArrayHelper;
@@ -28,6 +29,11 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'x')->textInput(['type' => 'number']) ?>
 
     <?= $form->field($model, 'y')->textInput(['type' => 'number']) ?>
+
+    <?= $form->field($model, 'intersection_type_id')->dropDownList(
+        ArrayHelper::map(IntersectionType::find()->orderBy('type')->all(), 'id', 'type'),
+        ['prompt' => 'Select Intersection Type']
+    ) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

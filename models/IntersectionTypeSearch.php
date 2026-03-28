@@ -6,9 +6,9 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * IntersectionSearch represents the model behind the search form of `app\models\Intersection`.
+ * IntersectionTypeSearch represents the model behind the search form of `app\models\IntersectionType`.
  */
-class IntersectionSearch extends Intersection
+class IntersectionTypeSearch extends IntersectionType
 {
     /**
      * {@inheritdoc}
@@ -16,8 +16,8 @@ class IntersectionSearch extends Intersection
     public function rules()
     {
         return [
-            [['id', 'map_id', 'player_id', 'x', 'y', 'intersection_type_id'], 'integer'],
-            [['created_at_range', 'updated_at_range'], 'safe'],
+            [['id'], 'integer'],
+            [['type', 'image_url', 'created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class IntersectionSearch extends Intersection
      */
     public function search($params, $formName = null)
     {
-        $query = Intersection::find();
+        $query = IntersectionType::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,11 +54,6 @@ class IntersectionSearch extends Intersection
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'map_id' => $this->map_id,
-            'player_id' => $this->player_id,
-            'x' => $this->x,
-            'y' => $this->y,
-            'intersection_type_id' => $this->intersection_type_id,
         ]);
 
         if (!empty($this->created_at_range) && strpos($this->created_at_range, ' - ') !== false) {
@@ -74,6 +69,9 @@ class IntersectionSearch extends Intersection
             $end   = date('Y-m-d H:i:s', strtotime($end));
             $query->andFilterWhere(['between', 'updated_at', $start, $end]);
         }
+
+        $query->andFilterWhere(['like', 'type', $this->type])
+            ->andFilterWhere(['like', 'image_url', $this->image_url]);
 
         return $dataProvider;
     }
