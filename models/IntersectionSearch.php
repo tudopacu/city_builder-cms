@@ -16,8 +16,8 @@ class IntersectionSearch extends Intersection
     public function rules()
     {
         return [
-            [['id', 'map_id', 'player_id', 'x', 'y', 'intersection_type_id'], 'integer'],
-            [['created_at_range', 'updated_at_range'], 'safe'],
+            [['id', 'map_id', 'player_id', 'x', 'y'], 'integer'],
+            [['type', 'created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
 
@@ -58,8 +58,9 @@ class IntersectionSearch extends Intersection
             'player_id' => $this->player_id,
             'x' => $this->x,
             'y' => $this->y,
-            'intersection_type_id' => $this->intersection_type_id,
         ]);
+
+        $query->andFilterWhere(['like', 'type', $this->type]);
 
         if (!empty($this->created_at_range) && strpos($this->created_at_range, ' - ') !== false) {
             [$start, $end] = explode(' - ', $this->created_at_range, 2);

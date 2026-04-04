@@ -10,13 +10,12 @@ namespace app\models;
  * @property int|null $player_id
  * @property int $x
  * @property int $y
- * @property int|null $intersection_type_id
+ * @property string|null $type
  * @property string|null $created_at
  * @property string|null $updated_at
  *
  * @property Map $map
  * @property Player $player
- * @property IntersectionType $intersectionType
  * @property Road[] $startRoads
  * @property Road[] $endRoads
  */
@@ -30,19 +29,41 @@ class Intersection extends CoreModel
         return 'intersections';
     }
 
+    public static function typeList()
+    {
+        return [
+            'road-tl-br' => 'road-tl-br',
+            'road-bl-tr' => 'road-bl-tr',
+            'bend-bl-br' => 'bend-bl-br',
+            'bend-br-tr' => 'bend-br-tr',
+            'bend-tr-tl' => 'bend-tr-tl',
+            'bend-tr-br' => 'bend-tr-br',
+            't-tr' => 't-tr',
+            't-br' => 't-br',
+            't-bl' => 't-bl',
+            't-tl' => 't-tl',
+            'cross' => 'cross',
+            'end-tr' => 'end-tr',
+            'end-br' => 'end-br',
+            'end-bl' => 'end-bl',
+            'end-tl' => 'end-tl',
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['map_id', 'player_id', 'intersection_type_id', 'updated_at'], 'default', 'value' => null],
+            [['map_id', 'player_id', 'type', 'updated_at'], 'default', 'value' => null],
             [['x', 'y'], 'required'],
-            [['map_id', 'player_id', 'x', 'y', 'intersection_type_id'], 'integer'],
+            [['map_id', 'player_id', 'x', 'y'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
+            [['type'], 'string', 'max' => 255],
+            [['type'], 'in', 'range' => array_keys(self::typeList()), 'skipOnEmpty' => true],
             [['map_id'], 'exist', 'skipOnError' => true, 'targetClass' => Map::class, 'targetAttribute' => ['map_id' => 'id']],
             [['player_id'], 'exist', 'skipOnError' => true, 'targetClass' => Player::class, 'targetAttribute' => ['player_id' => 'id']],
-            [['intersection_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => IntersectionType::class, 'targetAttribute' => ['intersection_type_id' => 'id']],
         ];
     }
 
@@ -57,7 +78,7 @@ class Intersection extends CoreModel
             'player_id' => 'Player',
             'x' => 'X',
             'y' => 'Y',
-            'intersection_type_id' => 'Intersection Type',
+            'type' => 'Type',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -81,16 +102,6 @@ class Intersection extends CoreModel
     public function getPlayer()
     {
         return $this->hasOne(Player::class, ['id' => 'player_id']);
-    }
-
-    /**
-     * Gets query for [[IntersectionType]].
-     *
-     * @return \yii\db\ActiveQuery|IntersectionTypeQuery
-     */
-    public function getIntersectionType()
-    {
-        return $this->hasOne(IntersectionType::class, ['id' => 'intersection_type_id']);
     }
 
     /**

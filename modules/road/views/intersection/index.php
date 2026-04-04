@@ -1,6 +1,6 @@
 <?php
 
-use app\models\IntersectionType;
+use app\models\Intersection;
 use app\models\Map;
 use app\models\Player;
 use kartik\daterange\DateRangePicker;
@@ -74,14 +74,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::input('number', $searchModel->formName() . '[y]', $searchModel->y, ['class' => 'form-control']),
             ],
             [
-                'attribute' => 'intersection_type_id',
-                'value' => function ($model) {
-                    return $model->intersectionType ? $model->intersectionType->type : $model->intersection_type_id;
-                },
+                'attribute' => 'type',
                 'filter' => Html::dropDownList(
-                    $searchModel->formName() . '[intersection_type_id]',
-                    $searchModel->intersection_type_id,
-                    ArrayHelper::map(IntersectionType::find()->orderBy('type')->all(), 'id', 'type'),
+                    $searchModel->formName() . '[type]',
+                    $searchModel->type,
+                    Intersection::typeList(),
                     ['class' => 'form-control', 'prompt' => 'All']
                 ),
             ],
