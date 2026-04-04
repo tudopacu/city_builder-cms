@@ -23,6 +23,27 @@ class RoadType extends CoreModel
         return 'road_types';
     }
 
+    public static function typeList()
+    {
+        return [
+            'road-tl-br' => 'road-tl-br',
+            'road-bl-tr' => 'road-bl-tr',
+            'bend-bl-br' => 'bend-bl-br',
+            'bend-br-tr' => 'bend-br-tr',
+            'bend-tr-tl' => 'bend-tr-tl',
+            'bend-tr-br' => 'bend-tr-br',
+            't-tr' => 't-tr',
+            't-br' => 't-br',
+            't-bl' => 't-bl',
+            't-tl' => 't-tl',
+            'cross' => 'cross',
+            'end-tr' => 'end-tr',
+            'end-br' => 'end-br',
+            'end-bl' => 'end-bl',
+            'end-tl' => 'end-tl',
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -33,6 +54,7 @@ class RoadType extends CoreModel
             [['type'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['type', 'image_url'], 'string', 'max' => 255],
+            [['type'], 'in', 'range' => array_keys(self::typeList()), 'skipOnEmpty' => true],
         ];
     }
 

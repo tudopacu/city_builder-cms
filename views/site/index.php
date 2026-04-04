@@ -7,8 +7,6 @@
 use yii\bootstrap5\Carousel;
 
 $this->title = 'City Builder CMS';
-
-
 ?>
 
 <div class="container">

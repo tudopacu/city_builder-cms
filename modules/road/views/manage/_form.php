@@ -1,5 +1,6 @@
 <?php
 
+use app\models\RoadType;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,7 +13,10 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'type')->dropDownList(
+        RoadType::typeList(),
+        ['prompt' => 'Select Type']
+    ) ?>
 
     <?= $form->field($model, 'image_url')->textInput(['maxlength' => true]) ?>
 

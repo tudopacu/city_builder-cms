@@ -1,5 +1,6 @@
 <?php
 
+use app\models\RoadType;
 use kartik\daterange\DateRangePicker;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -31,7 +32,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'id',
                 'filter' => Html::input('number', $searchModel->formName() . '[id]', $searchModel->id, ['class' => 'form-control']),
             ],
-            'type',
+            [
+                'attribute' => 'type',
+                'filter' => Html::dropDownList(
+                    $searchModel->formName() . '[type]',
+                    $searchModel->type,
+                    RoadType::typeList(),
+                    ['class' => 'form-control', 'prompt' => 'All']
+                ),
+            ],
             'image_url:url',
             [
                 'attribute' => 'created_at',
