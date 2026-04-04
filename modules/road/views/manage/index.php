@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'id',
                 'filter' => Html::input('number', $searchModel->formName() . '[id]', $searchModel->id, ['class' => 'form-control']),
             ],
+            'name',
             'type',
             'image_url:url',
             [

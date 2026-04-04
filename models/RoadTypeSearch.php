@@ -17,7 +17,7 @@ class RoadTypeSearch extends RoadType
     {
         return [
             [['id'], 'integer'],
-            [['type', 'image_url', 'created_at_range', 'updated_at_range'], 'safe'],
+            [['type', 'name', 'image_url', 'created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
 
@@ -71,6 +71,7 @@ class RoadTypeSearch extends RoadType
         }
 
         $query->andFilterWhere(['like', 'type', $this->type])
+            ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'image_url', $this->image_url]);
 
         return $dataProvider;
