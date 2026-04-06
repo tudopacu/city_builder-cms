@@ -22,6 +22,7 @@ use Yii;
  * @property PlayerBuilding[] $playerBuildings
  * @property BuildingProduction[] $buildingProductions
  * @property BuildingConstructionCost[] $buildingConstructionCosts
+ * @property BuildingWorker[] $buildingWorkers
  */
 class Building extends CoreModel
 {
@@ -117,6 +118,16 @@ class Building extends CoreModel
     public function getBuildingConstructionCosts()
     {
         return $this->hasMany(BuildingConstructionCost::class, ['building_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[BuildingWorkers]].
+     *
+     * @return \yii\db\ActiveQuery|BuildingWorkerQuery
+     */
+    public function getBuildingWorkers()
+    {
+        return $this->hasMany(BuildingWorker::class, ['building_id' => 'id']);
     }
 
     /**
