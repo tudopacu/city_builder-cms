@@ -6,6 +6,7 @@ namespace app\models;
  * This is the model class for table "road_types".
  *
  * @property int $id
+ * @property string|null $name
  * @property string $type
  * @property string|null $image_url
  * @property string|null $created_at
@@ -29,10 +30,10 @@ class RoadType extends CoreModel
     public function rules()
     {
         return [
-            [['updated_at', 'image_url'], 'default', 'value' => null],
+            [['updated_at', 'image_url', 'name'], 'default', 'value' => null],
             [['type'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
-            [['type', 'image_url'], 'string', 'max' => 255],
+            [['type', 'image_url', 'name'], 'string', 'max' => 255],
         ];
     }
 
@@ -43,6 +44,7 @@ class RoadType extends CoreModel
     {
         return [
             'id' => 'ID',
+            'name' => 'Name',
             'type' => 'Type',
             'image_url' => 'Image Url',
             'created_at' => 'Created At',
