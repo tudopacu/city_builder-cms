@@ -4,7 +4,9 @@ namespace app\modules\user\controllers;
 
 use app\models\User;
 use app\models\UserSearch;
+use Yii;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -29,6 +31,34 @@ class ManageController extends Controller
                 ],
             ]
         );
+    }
+
+    /**
+     * Create first user action. Only accessible when the users table is empty.
+     *
+     * @return string|\yii\web\Response
+     * @throws ForbiddenHttpException if the users table is not empty
+     */
+    public function actionCreateFirstUser()
+    {
+        if (User::find()->exists()) {
+            throw new ForbiddenHttpException('This page is only accessible when there are no users.');
+        }
+
+        $model = new User();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', 'User created successfully. You can now log in.');
+                return $this->redirect(['/site/login']);
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+
+        return $this->render('create-first-user', [
+            'model' => $model,
+        ]);
     }
 
     /**

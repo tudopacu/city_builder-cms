@@ -76,7 +76,7 @@ class Menu
             . '</li>';
 
         if (Yii::$app->user->isGuest && !User::find()->exists()) {
-            $menu[] = ['label' => 'Create User', 'url' => ['/site/create-first-user']];
+            $menu[] = ['label' => 'Create User', 'url' => ['/user/manage/create-first-user']];
         }
 
         return $menu;

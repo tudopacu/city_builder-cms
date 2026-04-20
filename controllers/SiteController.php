@@ -9,9 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\User;
 use yii\helpers\FileHelper;
-use yii\web\ForbiddenHttpException;
 
 class SiteController extends Controller
 {
@@ -104,34 +102,6 @@ class SiteController extends Controller
 
         $model->password = '';
         return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Create first user action. Only accessible when the users table is empty.
-     *
-     * @return Response|string
-     * @throws ForbiddenHttpException if the users table is not empty
-     */
-    public function actionCreateFirstUser()
-    {
-        if (User::find()->exists()) {
-            throw new ForbiddenHttpException('This page is only accessible when there are no users.');
-        }
-
-        $model = new User();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                Yii::$app->session->setFlash('success', 'User created successfully. You can now log in.');
-                return $this->redirect(['/site/login']);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create-first-user', [
             'model' => $model,
         ]);
     }

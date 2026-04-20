@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 $this->title = 'Create First User';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-create-first-user">
+<div class="user-create-first-user">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
