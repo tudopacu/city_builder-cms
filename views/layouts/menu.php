@@ -1,6 +1,7 @@
 <?php
 namespace app\views\layouts;
 
+use app\models\User;
 use Yii;
 use yii\bootstrap5\Html;
 
@@ -73,6 +74,10 @@ class Menu
             )
             . Html::endForm()
             . '</li>';
+
+        if (Yii::$app->user->isGuest && !User::find()->exists()) {
+            $menu[] = ['label' => 'Create User', 'url' => ['/site/create-first-user']];
+        }
 
         return $menu;
     }
