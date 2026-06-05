@@ -23,8 +23,13 @@ WORKDIR /var/www/html
 # Copy app files
 COPY . /var/www/html
 
-# Set permissions (adjust if necessary)
+# Configure Apache with your custom virtual host file
+COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
+
+# Set overall permissions to Apache's default user
 RUN chown -R www-data:www-data /var/www/html
 
-# Configure Apache
-COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
+# Crucial for Yii 2: Ensure the app can write to its temporary and asset folders
+RUN chmod -R 775 /var/www/html/runtime /var/www/html/web/assets
+
+EXPOSE 80
