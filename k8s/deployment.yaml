@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: citybuilder-cms
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: yii2
+  template:
+    metadata:
+      labels:
+        app: yii2
+    spec:
+      containers:
+      - name: php
+        image: my-local-registry:5000/yii2-app:latest
+        ports:
+        - containerPort: 9000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yii2-service
+spec:
+  selector:
+    app: yii2
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9000
+  type: ClusterIP
