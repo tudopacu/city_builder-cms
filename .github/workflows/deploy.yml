@@ -36,19 +36,12 @@ jobs:
 
   deploy-to-k8s:
     needs: build-and-push
-    runs-on: ubuntu-latest
+    # Tell GitHub to run this job directly on your home server agent
+    runs-on: self-hosted
 
     steps:
-      - name: Deploy via SSH command execution
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            # Apply the Kubernetes manifest changes
-            kubectl apply -f ~/k8s/yii2-cms.yaml
-            
-            # Force a rolling update restart so Kubernetes downloads the fresh image layer
-            kubectl rollout restart deployment/yii2-cms-deployment
+      - name: Deploy Manifest directly to Cluster
+        run: |
+          # The agent runs commands natively as your user on CityBuilderSrv
+          kubectl apply -f ~/k8s/yii2-cms.yaml
+          kubectl rollout restart deployment/yii2-cms-deployment
