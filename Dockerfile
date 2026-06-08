@@ -28,7 +28,7 @@ COPY composer.json composer.lock /var/www/html/
 
 # CRITICAL FIX: Disable memory limits and remove --no-scripts flag
 # so that any required post-install scripts can run cleanly
-RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+RUN --network=host COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
 # Copy the rest of your application files
 COPY . /var/www/html
