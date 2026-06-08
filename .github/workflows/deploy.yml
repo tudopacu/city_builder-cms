@@ -16,10 +16,10 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
-      # STEP 1: Install PHP and Composer locally on the host machine if missing todo remove the todo
+      # STEP 1: Install PHP and Composer locally on the host machine if missing
       - name: Setup PHP and Composer on Host
         run: |
-          sudo apt-get update && sudo apt-get install -p php-cli php-zip php-xml php-mbstring php-curl php-intl -y
+          sudo apt-get update && sudo apt-get install --no-install-recommends php-cli php-zip php-xml php-mbstring php-curl php-intl -y
 
       # STEP 2: Run composer install natively using unthrottled host memory
       - name: Install Dependencies Natively
