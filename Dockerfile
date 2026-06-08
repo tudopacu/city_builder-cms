@@ -1,5 +1,9 @@
 FROM php:8.4-apache
 
+RUN a2enmod rewrite
+
+RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+
 # Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
