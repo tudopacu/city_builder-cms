@@ -3,11 +3,11 @@ name: CI/CD Build and Deploy to Home K8s
 on:
   push:
     branches:
-      - master  # This restricts the workflow to only run on pushes to the master branch
+      - master
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted  # CRITICAL: Run the build on your server to use local RAM
     permissions:
       contents: read
       packages: write
@@ -15,6 +15,16 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
+
+      # STEP 1: Install PHP and Composer locally on the host machine if missing
+      - name: Setup PHP and Composer on Host
+        run: |
+          sudo apt-get update && sudo apt-get install -p php-cli php-zip php-xml php-mbstring php-curl php-intl -y
+
+      # STEP 2: Run composer install natively using unthrottled host memory
+      - name: Install Dependencies Natively
+        run: |
+          COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Log in to GitHub Container Registry (GHCR)
         uses: docker/login-action@v3
@@ -27,23 +37,10 @@ jobs:
         run: |
           echo "IMAGE_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
+      # STEP 3: Build the container (It will now natively pick up the local vendor folder)
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: ghcr.io/${{ env.IMAGE_NAME }}:latest
-          allow: network.host
-          network: host
-
-  deploy-to-k8s:
-    needs: build-and-push
-    # Tell GitHub to run this job directly on your home server agent
-    runs-on: self-hosted
-
-    steps:
-      - name: Deploy Manifest directly to Cluster
-        run: |
-          # The agent runs commands natively as your user on CityBuilderSrv
-          kubectl apply -f ~/k8s/yii2-cms.yaml
-          kubectl rollout restart deployment/yii2-cms-deployment

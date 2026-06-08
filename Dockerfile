@@ -17,20 +17,10 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Install Composer from the official Docker image layer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy ONLY composer files first (optimizes Docker build caching layers)
-COPY composer.json composer.lock /var/www/html/
-
-# CRITICAL FIX: Disable memory limits and remove --no-scripts flag
-# so that any required post-install scripts can run cleanly
-RUN --network=host COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-
-# Copy the rest of your application files
+# Copy the entire application codebase (INCLUDING the pre-installed vendor folder)
 COPY . /var/www/html
 
 # Configure Apache with your custom virtual host file
@@ -39,7 +29,7 @@ COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 # Set overall permissions to Apache's default user
 RUN chown -R www-data:www-data /var/www/html
 
-# Ensure the app can write to its temporary and asset folders (creating them if missing)
+# Ensure the app can write to its temporary and asset folders
 RUN mkdir -p runtime web/assets \
     && chmod -R 775 /var/www/html/runtime /var/www/html/web/assets
 
