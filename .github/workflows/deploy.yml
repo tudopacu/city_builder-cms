@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: self-hosted  # CRITICAL: Run the build on your server to use local RAM todo remove me
+    runs-on: self-hosted  # CRITICAL: Run the build on your server to use local RAM
     permissions:
       contents: read
       packages: write
