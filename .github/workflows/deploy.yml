@@ -35,6 +35,9 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
+          # This forces Docker to use the current runner directory where composer install ran
           context: .
+          # This uses the host's native docker builder instead of an isolated virtual instance
+          driver: docker
           push: true
           tags: ghcr.io/${{ env.IMAGE_NAME }}:latest
