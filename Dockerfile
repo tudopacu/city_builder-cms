@@ -17,10 +17,20 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
+# Install Composer from the official Docker image layer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy app files
+# Copy ONLY composer files first (optimizes Docker build caching layers)
+COPY composer.json composer.lock /var/www/html/
+
+# Install production dependencies without running scripts or development tools
+# (If your app needs specific scripts to run during install, remove --no-scripts)
+RUN composer install --no-dev --no-interaction --prefer-dist --no-scripts --optimize-autoloader
+
+# Copy the rest of your application files
 COPY . /var/www/html
 
 # Configure Apache with your custom virtual host file
@@ -29,7 +39,8 @@ COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 # Set overall permissions to Apache's default user
 RUN chown -R www-data:www-data /var/www/html
 
-# Crucial for Yii 2: Ensure the app can write to its temporary and asset folders
-RUN chmod -R 775 /var/www/html/runtime /var/www/html/web/assets
+# Ensure the app can write to its temporary and asset folders (creating them if missing)
+RUN mkdir -p runtime web/assets \
+    && chmod -R 775 /var/www/html/runtime /var/www/html/web/assets
 
 EXPOSE 80
