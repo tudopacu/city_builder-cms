@@ -26,9 +26,9 @@ WORKDIR /var/www/html
 # Copy ONLY composer files first (optimizes Docker build caching layers)
 COPY composer.json composer.lock /var/www/html/
 
-# Install production dependencies without running scripts or development tools
-# (If your app needs specific scripts to run during install, remove --no-scripts)
-RUN composer install --no-dev --no-interaction --prefer-dist --no-scripts --optimize-autoloader
+# CRITICAL FIX: Disable memory limits and remove --no-scripts flag
+# so that any required post-install scripts can run cleanly
+RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
 # Copy the rest of your application files
 COPY . /var/www/html
