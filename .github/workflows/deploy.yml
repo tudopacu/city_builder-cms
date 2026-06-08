@@ -41,3 +41,11 @@ jobs:
           driver: docker
           push: true
           tags: ghcr.io/${{ env.IMAGE_NAME }}:latest
+
+      - name: Deploy Manifest directly to Cluster
+        run: |
+          # 1. Apply any configuration updates
+          kubectl apply -f ~/k8s/yii2-cms.yaml
+          
+          # 2. CRITICAL FIX: Force a rolling restart to pull down the fresh :latest image layer
+          kubectl rollout restart deployment/yii2-cms-deployment
