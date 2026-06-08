@@ -33,6 +33,8 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ env.IMAGE_NAME }}:latest
+          allow: network.host
+          network: host
 
   deploy-to-k8s:
     needs: build-and-push
