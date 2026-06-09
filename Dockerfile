@@ -3,11 +3,14 @@ FROM php:8.4-apache
 # 1. Enable Apache mod_rewrite right out of the gate
 RUN a2enmod rewrite
 
-# 2. Allow .htaccess files to override rules inside /var/www/html
+# 2. Allow .htaccess files to override rules inside /var/www/html/web
 RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
-# CRITICAL FIX FOR PERSISTENT 400 ERROR:
-# Increase Apache's HTTP Header Field acceptance limit to handle large proxy/ingress cookie payloads
+# CRITICAL 403 FIX: Change Apache's default DocumentRoot and Directory targets to Yii2's web folder
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/web|g' /etc/apache2/sites-available/000-default.conf
+RUN sed -i 's|<Directory /var/www/html/>|<Directory /var/www/html/web/>|g' /etc/apache2/apache2.conf
+
+# 3. Increase Apache's HTTP Header Field acceptance limit to handle proxy cookie payloads
 RUN echo "LimitRequestFieldSize 65536" >> /etc/apache2/apache2.conf
 
 # Install system dependencies and PHP extensions
