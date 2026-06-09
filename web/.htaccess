@@ -1,5 +1,12 @@
 RewriteEngine on
+
+# Force a trailing slash if requesting the bare subdirectory name without a file extension
+RewriteCond %{REQUEST_URI} ^/cms$
+RewriteRule ^(.*)$ http://citybuilder.home.ro/cms/ [L,R=301]
+
 RewriteBase /
-RewriteCond %{REQUEST_FILENAME} !-d
+
+# Standard Yii2 Pretty URL rewrites
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . index.php [L]
