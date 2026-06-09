@@ -1,8 +1,11 @@
 RewriteEngine on
 
+# Explicitly declare the base path context
 RewriteBase /
 
-# Standard Yii2 Pretty URL rewrites
-RewriteCond %{REQUEST_FILENAME} !-d
+# If a physical file or folder exists, serve it directly (images, css, js assets)
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule . index.php [L]
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# CRITICAL FIX: Explicitly capture everything after the slash and append it to index.php
+RewriteRule ^(.*)$ index.php?r=$1 [L,QSA]
