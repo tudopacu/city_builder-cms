@@ -80,10 +80,11 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false, // this removes index.php from URLs
-            'enableStrictParsing' => false, // optional
+//            'enableStrictParsing' => false, // optional
             'rules' => [
-                // your custom URL rules, e.g.:
-                // 'post/<id:\d+>' => 'post/view',
+                // Explicitly catching /cms in the URL
+                'cms/<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                'cms' => 'site/index',
             ],
         ],
     ],
