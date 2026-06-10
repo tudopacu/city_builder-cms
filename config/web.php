@@ -82,9 +82,9 @@ $config = [
             'showScriptName' => false, // this removes index.php from URLs
 //            'enableStrictParsing' => false, // optional
             'rules' => [
-                // Explicitly catching /cms in the URL
+                'cms/<controller:\w+>' => '<controller>/index',
                 'cms/<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-                'cms' => 'site/index',
+                'cms/<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
             ],
         ],
     ],
