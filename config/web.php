@@ -43,17 +43,7 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'rvDfYFJYVJvXSXDwtvPr4n_OmlzL3W-h',
-            'baseUrl' => '/cms',
-            'trustedHosts' => [
-                '10.0.0.0/8',
-                '172.16.0.0/12',
-                '192.168.0.0/16',
-            ],
-            'secureHeaders' => [
-                'X-Forwarded-For',
-                'X-Forwarded-Host',
-                'X-Forwarded-Proto',
-            ],
+            'baseUrl' => (strpos($_SERVER['REQUEST_URI'] ?? '', '/cms') === 0) ? '/cms' : '',
         ],
         'assetManager' => [
             'baseUrl' => '/cms/assets',
@@ -90,9 +80,10 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false, // this removes index.php from URLs
+            'enableStrictParsing' => false, // optional
             'rules' => [
-                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-                '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
+                // your custom URL rules, e.g.:
+                // 'post/<id:\d+>' => 'post/view',
             ],
         ],
     ],
