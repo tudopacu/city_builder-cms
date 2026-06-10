@@ -1,11 +1,10 @@
 RewriteEngine on
 
-# Explicitly declare the base path context
 RewriteBase /
 
-# If a physical file or folder exists, serve it directly (images, css, js assets)
+# If a physical file or folder exists, serve it directly
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-# CRITICAL FIX: Explicitly capture everything after the slash and append it to index.php
-RewriteRule ^(.*)$ index.php?r=$1 [L,QSA]
+# Send it over cleanly to index.php
+RewriteRule . index.php [L]
