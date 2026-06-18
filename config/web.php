@@ -43,10 +43,10 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'rvDfYFJYVJvXSXDwtvPr4n_OmlzL3W-h',
-            'baseUrl' => 'http://citybuilder.home.ro:8080/cms',
+            'baseUrl' => '',
         ],
         'assetManager' => [
-            'baseUrl' => '/cms/assets',
+            'baseUrl' => '/assets',
             'basePath' => '@webroot/assets',
             'appendTimestamp' => true,
         ],
@@ -80,14 +80,7 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false, // this removes index.php from URLs
-            'enableStrictParsing' => false, // optional
             'rules' => [
-                '<module:\w+>/<controller:[\w-]+>' => '<module>/<controller>/index',
-                '<module:\w+>/<controller:[\w-]+>/<action:[\w-]+>' => '<module>/<controller>/<action>',
-                '<module:\w+>/<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<module>/<controller>/<action>',
-                '<controller:[\w-]+>' => '<controller>/index',
-                '<controller:[\w-]+>/<action:[\w-]+>' => '<controller>/<action>',
-                '<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<controller>/<action>',
             ],
         ],
     ],
