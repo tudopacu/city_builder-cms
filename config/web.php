@@ -82,8 +82,12 @@ $config = [
             'showScriptName' => false, // this removes index.php from URLs
             'enableStrictParsing' => false, // optional
             'rules' => [
-                // your custom URL rules, e.g.:
-                // 'post/<id:\d+>' => 'post/view',
+                '<module:\w+>/<controller:[\w-]+>' => '<module>/<controller>/index',
+                '<module:\w+>/<controller:[\w-]+>/<action:[\w-]+>' => '<module>/<controller>/<action>',
+                '<module:\w+>/<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<module>/<controller>/<action>',
+                '<controller:[\w-]+>' => '<controller>/index',
+                '<controller:[\w-]+>/<action:[\w-]+>' => '<controller>/<action>',
+                '<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<controller>/<action>',
             ],
         ],
     ],
