@@ -82,12 +82,12 @@ $config = [
             'showScriptName' => false, // this removes index.php from URLs
             'enableStrictParsing' => false, // optional
             'rules' => [
-                'cms/<module:\w+>/<controller:[\w-]+>' => '<module>/<controller>/index',
-                'cms/<module:\w+>/<controller:[\w-]+>/<action:[\w-]+>' => '<module>/<controller>/<action>',
-                'cms/<module:\w+>/<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<module>/<controller>/<action>',
-                'cms/<controller:[\w-]+>' => '<controller>/index',
-                'cms/<controller:[\w-]+>/<action:[\w-]+>' => '<controller>/<action>',
-                'cms/<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<controller>/<action>',
+                '<module:\w+>/<controller:[\w-]+>' => '<module>/<controller>/index',
+                '<module:\w+>/<controller:[\w-]+>/<action:[\w-]+>' => '<module>/<controller>/<action>',
+                '<module:\w+>/<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<module>/<controller>/<action>',
+                '<controller:[\w-]+>' => '<controller>/index',
+                '<controller:[\w-]+>/<action:[\w-]+>' => '<controller>/<action>',
+                '<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<controller>/<action>',
             ],
         ],
     ],
