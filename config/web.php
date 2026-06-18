@@ -43,7 +43,7 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'rvDfYFJYVJvXSXDwtvPr4n_OmlzL3W-h',
-            'baseUrl' => (strpos($_SERVER['REQUEST_URI'] ?? '', '/cms') === 0) ? '/cms' : '',
+            'baseUrl' => '/cms',
         ],
         'assetManager' => [
             'baseUrl' => '/cms/assets',
