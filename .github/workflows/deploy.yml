@@ -39,7 +39,6 @@ jobs:
           driver: docker
           push: true
           no-cache: true
-          # TAG REFACTOR: Swap from static :latest to tracking the explicit commit SHA string
           tags: ghcr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
   deploy-to-k8s:
@@ -47,11 +46,10 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      # REFACTOR: Handoff configuration update and cluster deployment to the infrastructure repo
       - name: Notify Infrastructure Repo of New Image
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.INFRA_PAT }}
           repository: tudopacu/city_builder-infrastructure
           event-type: update-image
-          client-payload: '{"app": "yii2-cms", "image": "ghcr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}"}'
+          client-payload: '{"app": "yii2-cms", "image": "ghcr.io/tudopacu/city_builder-cms:${{ github.sha }}"}'
