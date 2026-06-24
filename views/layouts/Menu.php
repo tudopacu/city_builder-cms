@@ -13,7 +13,7 @@ class Menu
 
         if (!Yii::$app->user->isGuest) {
             $menu = [
-                ['label' => 'Tup', 'url' => ['/site/index']],
+                ['label' => 'Tup2', 'url' => ['/site/index']],
                 ['label' => 'Users', 'url' => ['/user']],
                 [
                     'label' => 'Players',
