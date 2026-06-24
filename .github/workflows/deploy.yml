@@ -38,26 +38,20 @@ jobs:
           context: .
           driver: docker
           push: true
-          tags: ghcr.io/${{ env.IMAGE_NAME }}:latest
+          no-cache: true
+          # TAG REFACTOR: Swap from static :latest to tracking the explicit commit SHA string
+          tags: ghcr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
   deploy-to-k8s:
     needs: build-and-push
     runs-on: self-hosted
 
     steps:
-      - name: Deploy Manifest directly to Cluster
-        run: |
-          # 1. Apply any changes made to the yii2-cms.yaml manifest
-          kubectl apply -f ~/k8s/yii2-cms.yaml
-          
-          # 2. Force a rolling restart to pull the fresh image layers from GHCR
-          kubectl rollout restart deployment/yii2-cms-deployment
-          
-          # 3. Wait for the new pod to be completely ready before running migrations
-          kubectl rollout status deployment/yii2-cms-deployment --timeout=90s
-          
-          # 4. Find the name of the newly created running pod
-          POD_NAME=$(kubectl get pods -l app=yii2-cms -o jsonpath="{.items[0].metadata.name}")
-          
-          # 5. Run the Yii migration command inside that pod automatically
-          kubectl exec $POD_NAME -- php yii migrate --interactive=0
+      # REFACTOR: Handoff configuration update and cluster deployment to the infrastructure repo
+      - name: Notify Infrastructure Repo of New Image
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.INFRA_PAT }}
+          repository: tudopacu/city_builder-infrastructure
+          event-type: update-image
+          client-payload: '{"app": "yii2-cms", "image": "ghcr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}"}'
