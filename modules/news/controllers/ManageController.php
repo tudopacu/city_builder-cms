@@ -4,6 +4,7 @@ namespace app\modules\news\controllers;
 
 use app\models\News;
 use app\models\NewsSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -71,6 +72,7 @@ class ManageController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                $this->deleteRedisKeysByPrefix('news');
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -94,6 +96,7 @@ class ManageController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $this->deleteRedisKeysByPrefix('news');
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -130,5 +133,13 @@ class ManageController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function deleteRedisKeysByPrefix(string $prefix): void
+    {
+        $keys = Yii::$app->redis->keys($prefix . '*');
+        if (!empty($keys)) {
+            Yii::$app->redis->del(...$keys);
+        }
     }
 }
