@@ -2,17 +2,16 @@
 
 namespace app\modules\building\controllers;
 
+use app\controllers\BaseController;
 use app\models\Building;
 use app\models\BuildingSearch;
-use Yii;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * BuildingController implements the CRUD actions for Building model.
  */
-class BuildingController extends Controller
+class BuildingController extends BaseController
 {
     /**
      * @inheritDoc
@@ -133,13 +132,5 @@ class BuildingController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    protected function deleteRedisKeysByPrefix(string $prefix): void
-    {
-        $keys = Yii::$app->redis->keys($prefix . '*');
-        if (!empty($keys)) {
-            Yii::$app->redis->del(...$keys);
-        }
     }
 }

@@ -2,17 +2,16 @@
 
 namespace app\modules\item\controllers;
 
+use app\controllers\BaseController;
 use app\models\Item;
 use app\models\ItemSearch;
-use Yii;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
  * Default controller for the `item` module
  */
-class ManageController extends Controller
+class ManageController extends BaseController
 {
     /**
      * @inheritDoc
@@ -133,13 +132,5 @@ class ManageController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    protected function deleteRedisKeysByPrefix(string $prefix): void
-    {
-        $keys = Yii::$app->redis->keys($prefix . '*');
-        if (!empty($keys)) {
-            Yii::$app->redis->del(...$keys);
-        }
     }
 }
