@@ -2,16 +2,16 @@
 
 namespace app\modules\building\controllers;
 
+use app\controllers\BaseController;
 use app\models\Building;
 use app\models\BuildingSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * BuildingController implements the CRUD actions for Building model.
  */
-class BuildingController extends Controller
+class BuildingController extends BaseController
 {
     /**
      * @inheritDoc
@@ -71,6 +71,7 @@ class BuildingController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                $this->deleteRedisKeysByPrefix('building');
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -94,6 +95,7 @@ class BuildingController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $this->deleteRedisKeysByPrefix('building');
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

@@ -2,16 +2,16 @@
 
 namespace app\modules\item\controllers;
 
+use app\controllers\BaseController;
 use app\models\Item;
 use app\models\ItemSearch;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
  * Default controller for the `item` module
  */
-class ManageController extends Controller
+class ManageController extends BaseController
 {
     /**
      * @inheritDoc
@@ -71,6 +71,7 @@ class ManageController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                $this->deleteRedisKeysByPrefix('item');
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -94,6 +95,7 @@ class ManageController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $this->deleteRedisKeysByPrefix('item');
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
