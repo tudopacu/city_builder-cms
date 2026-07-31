@@ -6,8 +6,9 @@
 //ini_set('display_errors', 1);
 
 // Update these lines at the top of the file to trust system environment variables
-defined('YII_DEBUG') or define('YII_DEBUG', isset($_ENV['YII_DEBUG']) ? (bool)$_ENV['YII_DEBUG'] : false);
-defined('YII_ENV') or define('YII_ENV', isset($_ENV['YII_ENV']) ? $_ENV['YII_ENV'] : 'prod');
+defined('YII_DEBUG') or define('YII_DEBUG', isset($_ENV['YII_DEBUG']) && $_ENV['YII_DEBUG']);
+defined('YII_ENV') or define('YII_ENV', $_ENV['YII_ENV'] ?? 'prod');
+defined('IMAGE_BASE_URL') or define('IMAGE_BASE_URL', $_ENV['IMAGE_BASE_URL'] ?? 'http://localhost:8084/html');
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';

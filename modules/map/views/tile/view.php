@@ -31,7 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'type',
-            'image_url:url',
+            [
+                'attribute' => 'image_url',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if (!$model->image_url) return '';
+                    $fullUrl = IMAGE_BASE_URL . $model->image_url;
+                    return Html::a($model->image_url, $fullUrl) . ' ' .
+                        Html::a(Html::img($fullUrl, ['style' => 'max-width:150px;max-height:150px;']), $fullUrl);
+                },
+            ],
             'created_at',
             'updated_at',
         ],
