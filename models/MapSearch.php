@@ -18,7 +18,7 @@ class MapSearch extends Map
     {
         return [
             [['id', 'width', 'length', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'created_at_range', 'updated_at_range'], 'safe'],
+            [['name', 'image_url', 'created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
 
@@ -78,7 +78,8 @@ class MapSearch extends Map
             $query->andFilterWhere(['between', 'updated_at', $start, $end]);
         }
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'image_url', $this->image_url]);
 
         return $dataProvider;
     }

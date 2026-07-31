@@ -18,7 +18,7 @@ class TileSearch extends Tile
     {
         return [
             [['id'], 'integer'],
-            [['type', 'image_url', 'created_at', 'updated_at', 'created_at_range', 'updated_at_range'], 'safe'],
+            [['type', 'created_at', 'updated_at', 'created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
 
@@ -76,8 +76,7 @@ class TileSearch extends Tile
             $query->andFilterWhere(['between', 'updated_at', $start, $end]);
         }
 
-        $query->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'image_url', $this->image_url]);
+        $query->andFilterWhere(['like', 'type', $this->type]);
 
         return $dataProvider;
     }

@@ -7,6 +7,7 @@ namespace app\models;
  *
  * @property int $id
  * @property string $name
+ * @property string|null $image_url
  * @property int $width
  * @property int $length
  * @property int $created_at
@@ -31,10 +32,10 @@ class Map extends CoreModel
     public function rules()
     {
         return [
-            [['name', 'width', 'length'], 'required'],
+            [['name', 'image_url', 'width', 'length'], 'required'],
             [['width', 'length'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['name'], 'string', 'max' => 255],
+            [['name', 'image_url'], 'string', 'max' => 255],
             [['name'], 'unique'],
         ];
     }
@@ -47,6 +48,7 @@ class Map extends CoreModel
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'image_url' => 'Image Url',
             'width' => 'Width',
             'length' => 'Length',
             'created_at' => 'Created At',

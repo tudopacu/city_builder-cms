@@ -9,7 +9,6 @@ use Yii;
  *
  * @property int $id
  * @property string $type
- * @property string|null $image_url
  * @property string|null $created_at
  * @property string|null $updated_at
  *
@@ -33,10 +32,10 @@ class Tile extends CoreModel
     public function rules()
     {
         return [
-            [['image_url', 'updated_at'], 'default', 'value' => null],
+            [['updated_at'], 'default', 'value' => null],
             [['type'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
-            [['type', 'image_url'], 'string', 'max' => 255],
+            [['type'], 'string', 'max' => 255],
         ];
     }
 
@@ -48,7 +47,6 @@ class Tile extends CoreModel
         return [
             'id' => 'ID',
             'type' => 'Type',
-            'image_url' => 'Image Url',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

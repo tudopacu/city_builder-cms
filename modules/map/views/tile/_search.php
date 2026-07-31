@@ -19,8 +19,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'type') ?>
 
-    <?= $form->field($model, 'image_url') ?>
-
     <?= $form->field($model, 'created_at') ?>
 
     <?php // echo $form->field($model, 'updated_at') ?>

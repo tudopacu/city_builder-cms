@@ -17,6 +17,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'image_url')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'width')->input('number') ?>
 
     <?= $form->field($model, 'length')->input('number') ?>
