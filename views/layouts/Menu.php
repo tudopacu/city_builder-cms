@@ -41,6 +41,7 @@ class Menu
                         ['label' => 'Levels', 'url' => ['/building/building-level']],
                         ['label' => 'Construction Costs', 'url' => ['/building/building-construction-cost']],
                         ['label' => 'Production', 'url' => ['/building/building-production']],
+                        ['label' => 'Current Productions', 'url' => ['/building/building-current-production']],
                     ],
                 ],
                 [

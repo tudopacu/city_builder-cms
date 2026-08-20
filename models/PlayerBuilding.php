@@ -111,6 +111,16 @@ class PlayerBuilding extends CoreModel
     }
 
     /**
+     * Gets query for [[BuildingCurrentProductions]].
+     *
+     * @return \yii\db\ActiveQuery|BuildingCurrentProductionQuery
+     */
+    public function getBuildingCurrentProductions()
+    {
+        return $this->hasMany(BuildingCurrentProduction::class, ['player_building_id' => 'id']);
+    }
+
+    /**
      * {@inheritdoc}
      * @return PlayerBuildingQuery the active query used by this AR class.
      */
