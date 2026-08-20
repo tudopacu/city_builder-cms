@@ -194,4 +194,14 @@ class Player extends CoreModel
     {
         return $this->hasMany(Intersection::class, ['player_id' => 'id']);
     }
+
+    /**
+     * Gets query for [[BuildingCurrentProductions]].
+     *
+     * @return \yii\db\ActiveQuery|BuildingCurrentProductionQuery
+     */
+    public function getBuildingCurrentProductions()
+    {
+        return $this->hasMany(BuildingCurrentProduction::class, ['player_id' => 'id']);
+    }
 }

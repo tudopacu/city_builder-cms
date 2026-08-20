@@ -80,6 +80,16 @@ class BuildingProduction extends CoreModel
     }
 
     /**
+     * Gets query for [[BuildingCurrentProductions]].
+     *
+     * @return \yii\db\ActiveQuery|BuildingCurrentProductionQuery
+     */
+    public function getBuildingCurrentProductions()
+    {
+        return $this->hasMany(BuildingCurrentProduction::class, ['building_production_id' => 'id']);
+    }
+
+    /**
      * {@inheritdoc}
      * @return BuildingProductionQuery the active query used by this AR class.
      */
