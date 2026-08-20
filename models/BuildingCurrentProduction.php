@@ -7,7 +7,6 @@ use Yii;
 /**
  * This is the model class for table "building_current_productions".
  *
- * @property int $id
  * @property int $player_id
  * @property int $player_building_id
  * @property int $building_production_id
@@ -37,6 +36,14 @@ class BuildingCurrentProduction extends CoreModel
     /**
      * {@inheritdoc}
      */
+    public static function primaryKey()
+    {
+        return ['player_id', 'player_building_id', 'building_production_id'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
@@ -57,7 +64,6 @@ class BuildingCurrentProduction extends CoreModel
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
             'player_id' => 'Player',
             'player_building_id' => 'Player Building',
             'building_production_id' => 'Building Production',

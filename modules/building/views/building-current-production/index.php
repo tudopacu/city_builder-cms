@@ -34,10 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             [
-                'attribute' => 'id',
-                'filter' => Html::input('number', $searchModel->formName() . '[id]', $searchModel->id, ['class' => 'form-control']),
-            ],
-            [
                 'attribute' => 'player_id',
                 'format' => 'raw',
                 'value' => function($model) {
@@ -121,7 +117,12 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, BuildingCurrentProduction $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
+                    return Url::toRoute([
+                        $action,
+                        'player_id' => $model->player_id,
+                        'player_building_id' => $model->player_building_id,
+                        'building_production_id' => $model->building_production_id,
+                    ]);
                 },
             ],
         ],

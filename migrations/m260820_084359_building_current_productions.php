@@ -10,7 +10,6 @@ class m260820_084359_building_current_productions extends Migration
     public function safeUp()
     {
         $this->createTable('{{%building_current_productions}}', [
-            'id' => $this->primaryKey(),
             'player_id' => $this->integer()->notNull(),
             'player_building_id' => $this->integer()->notNull(),
             'building_production_id' => $this->integer()->notNull(),
@@ -19,6 +18,12 @@ class m260820_084359_building_current_productions extends Migration
             'created_at' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP'),
             'updated_at' => $this->dateTime(),
         ]);
+
+        $this->addPrimaryKey(
+            'pk_bcp',
+            '{{%building_current_productions}}',
+            ['player_id', 'player_building_id', 'building_production_id']
+        );
 
         $this->addForeignKey(
             'fk_bcp_player',
@@ -77,6 +82,7 @@ class m260820_084359_building_current_productions extends Migration
         $this->dropForeignKey('fk_bcp_player', '{{%building_current_productions}}');
         $this->dropForeignKey('fk_bcp_player_building', '{{%building_current_productions}}');
         $this->dropForeignKey('fk_bcp_building_production', '{{%building_current_productions}}');
+        $this->dropPrimaryKey('pk_bcp', '{{%building_current_productions}}');
         $this->dropTable('{{%building_current_productions}}');
     }
 }

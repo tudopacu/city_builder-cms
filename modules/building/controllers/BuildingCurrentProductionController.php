@@ -49,14 +49,16 @@ class BuildingCurrentProductionController extends Controller
 
     /**
      * Displays a single BuildingCurrentProduction model.
-     * @param int $id ID
+     * @param int $player_id Player ID
+     * @param int $player_building_id Player Building ID
+     * @param int $building_production_id Building Production ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($player_id, $player_building_id, $building_production_id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($player_id, $player_building_id, $building_production_id),
         ]);
     }
 
@@ -71,7 +73,12 @@ class BuildingCurrentProductionController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect([
+                    'view',
+                    'player_id' => $model->player_id,
+                    'player_building_id' => $model->player_building_id,
+                    'building_production_id' => $model->building_production_id,
+                ]);
             }
         } else {
             $model->loadDefaultValues();
@@ -85,16 +92,23 @@ class BuildingCurrentProductionController extends Controller
     /**
      * Updates an existing BuildingCurrentProduction model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
+     * @param int $player_id Player ID
+     * @param int $player_building_id Player Building ID
+     * @param int $building_production_id Building Production ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($player_id, $player_building_id, $building_production_id)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($player_id, $player_building_id, $building_production_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect([
+                'view',
+                'player_id' => $model->player_id,
+                'player_building_id' => $model->player_building_id,
+                'building_production_id' => $model->building_production_id,
+            ]);
         }
 
         return $this->render('update', [
@@ -105,13 +119,15 @@ class BuildingCurrentProductionController extends Controller
     /**
      * Deletes an existing BuildingCurrentProduction model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
+     * @param int $player_id Player ID
+     * @param int $player_building_id Player Building ID
+     * @param int $building_production_id Building Production ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($player_id, $player_building_id, $building_production_id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($player_id, $player_building_id, $building_production_id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -119,13 +135,19 @@ class BuildingCurrentProductionController extends Controller
     /**
      * Finds the BuildingCurrentProduction model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
+     * @param int $player_id Player ID
+     * @param int $player_building_id Player Building ID
+     * @param int $building_production_id Building Production ID
      * @return BuildingCurrentProduction the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($player_id, $player_building_id, $building_production_id)
     {
-        if (($model = BuildingCurrentProduction::findOne(['id' => $id])) !== null) {
+        if (($model = BuildingCurrentProduction::findOne([
+            'player_id' => $player_id,
+            'player_building_id' => $player_building_id,
+            'building_production_id' => $building_production_id,
+        ])) !== null) {
             return $model;
         }
 

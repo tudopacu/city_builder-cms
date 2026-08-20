@@ -18,7 +18,7 @@ class BuildingCurrentProductionSearch extends BuildingCurrentProduction
     public function rules()
     {
         return [
-            [['id', 'player_id', 'player_building_id', 'building_production_id'], 'integer'],
+            [['player_id', 'player_building_id', 'building_production_id'], 'integer'],
             [['end_time', 'status', 'created_at', 'updated_at', 'created_at_range', 'updated_at_range', 'end_time_range'], 'safe'],
         ];
     }
@@ -54,7 +54,6 @@ class BuildingCurrentProductionSearch extends BuildingCurrentProduction
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
             'player_id' => $this->player_id,
             'player_building_id' => $this->player_building_id,
             'building_production_id' => $this->building_production_id,
