@@ -10,7 +10,7 @@ class m260820_084359_building_current_productions extends Migration
     public function safeUp()
     {
         $this->createTable('{{%building_current_productions}}', [
-            'id' => $this->primaryKey(),
+            'id' => $this->bigPrimaryKey(),
             'player_id' => $this->integer()->notNull(),
             'player_building_id' => $this->integer()->notNull(),
             'building_production_id' => $this->integer()->notNull(),
