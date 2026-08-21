@@ -37,7 +37,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'input_item_id',
-                'value' => $model->inputItem ? $model->inputItem->name : $model->input_item_id,
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if (!$model->inputItem) return $model->input_item_id;
+                    $item = $model->inputItem;
+                    $name = Html::a(Html::encode($item->name), ['/item/manage/view', 'id' => $item->id]);
+                    if (!$item->icon_url) return $name;
+                    $fullUrl = IMAGE_BASE_URL . $item->icon_url;
+                    return $name . ' ' . Html::a(Html::img($fullUrl, ['style' => 'max-width:50px;max-height:50px;']), $fullUrl);
+                },
             ],
             'quantity',
             'created_at:datetime',

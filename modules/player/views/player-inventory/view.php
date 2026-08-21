@@ -54,10 +54,16 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => array_map(function ($input) {
-                return [
-                    'label' => $input->item ? $input->item->name : 'Quantity #' . $input->quantity,
-                    'value' => $input->quantity,
-                ];
+                if (!$input->item) {
+                    return ['label' => 'Quantity #' . $input->quantity, 'value' => $input->quantity];
+                }
+                $item = $input->item;
+                $label = Html::encode($item->name);
+                if ($item->icon_url) {
+                    $fullUrl = IMAGE_BASE_URL . $item->icon_url;
+                    $label .= ' ' . Html::a(Html::img($fullUrl, ['style' => 'max-width:30px;max-height:30px;']), $fullUrl);
+                }
+                return ['label' => $label, 'format' => 'raw', 'value' => $input->quantity, 'encodeLabel' => false];
             }, $model->playerInventoryItems),
         ]) ?>
     <?php else: ?>
