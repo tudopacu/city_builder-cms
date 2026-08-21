@@ -50,9 +50,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'item_id',
                 'format' => 'raw',
                 'value' => function($model) {
-                    return $model->item
-                        ? Html::a($model->item->name, ['/item/manage/view', 'id' => $model->item_id])
-                        : '(not set)';
+                    if (!$model->item) return '(not set)';
+                    $item = $model->item;
+                    $name = Html::a(Html::encode($item->name), ['/item/manage/view', 'id' => $item->id]);
+                    if (!$item->icon_url) return $name;
+                    $fullUrl = IMAGE_BASE_URL . $item->icon_url;
+                    return $name . ' ' . Html::a(Html::img($fullUrl, ['style' => 'max-width:50px;max-height:50px;']), $fullUrl);
                 },
                 'filter' => Html::dropDownList(
                     $searchModel->formName() . '[item_id]',

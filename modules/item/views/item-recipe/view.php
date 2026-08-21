@@ -33,7 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             [
                 'attribute' => 'item_id',
-                'value' => $model->item ? $model->item->name : $model->item_id,
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if (!$model->item) return $model->item_id;
+                    $item = $model->item;
+                    $name = Html::a(Html::encode($item->name), ['/item/manage/view', 'id' => $item->id]);
+                    if (!$item->icon_url) return $name;
+                    $fullUrl = IMAGE_BASE_URL . $item->icon_url;
+                    return $name . ' ' . Html::a(Html::img($fullUrl, ['style' => 'max-width:50px;max-height:50px;']), $fullUrl);
+                },
             ],
             'production_time_seconds',
             'created_at:datetime',
@@ -46,10 +54,16 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => array_map(function ($input) {
-                return [
-                    'label' => $input->inputItem ? $input->inputItem->name : 'Item #' . $input->input_item_id,
-                    'value' => $input->quantity,
-                ];
+                if (!$input->inputItem) {
+                    return ['label' => 'Item #' . $input->input_item_id, 'value' => $input->quantity];
+                }
+                $item = $input->inputItem;
+                $label = Html::encode($item->name);
+                if ($item->icon_url) {
+                    $fullUrl = IMAGE_BASE_URL . $item->icon_url;
+                    $label .= ' ' . Html::a(Html::img($fullUrl, ['style' => 'max-width:30px;max-height:30px;']), $fullUrl);
+                }
+                return ['label' => $label, 'value' => $input->quantity, 'encodeLabel' => false];
             }, $model->itemRecipeInputs),
         ]) ?>
     <?php else: ?>

@@ -33,7 +33,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'description:ntext',
             'type',
-            'icon_url:url',
+            [
+                'attribute' => 'icon_url',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if (!$model->icon_url) return '';
+                    $fullUrl = IMAGE_BASE_URL . $model->icon_url;
+                    return Html::a($model->icon_url, $fullUrl) . ' ' .
+                        Html::a(Html::img($fullUrl, ['style' => 'max-width:150px;max-height:150px;']), $fullUrl);
+                },
+            ],
             'is_tradeable:boolean',
             'created_at:datetime',
             'updated_at:datetime',
