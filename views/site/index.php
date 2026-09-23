@@ -22,6 +22,7 @@ $this->title = 'City Builder CMS';
                 '<span class="carousel-control-next-icon" aria-hidden="true"></span>',
             ],
         ]);
+        echo '<p class="text-center mt-3">A test</p>';
     } else {
         echo '<p class="alert alert-warning">No images found in ' . $relativeUrl . '</p>';
     }
