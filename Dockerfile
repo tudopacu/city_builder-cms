@@ -1,4 +1,6 @@
-FROM php:8.4-apache
+# Keep the Debian release explicit. The unqualified 8.4-apache tag can move
+# between Debian releases and make package/extension builds fail unexpectedly.
+FROM php:8.4-apache-bookworm
 
 # 1. Enable Apache mod_rewrite right out of the gate
 RUN a2enmod rewrite
@@ -14,9 +16,10 @@ RUN sed -i 's|<Directory /var/www/html/>|<Directory /var/www/html/web/>|g' /etc/
 RUN echo "LimitRequestFieldSize 65536" >> /etc/apache2/apache2.conf
 
 # Install system dependencies and PHP extensions
-RUN apt-get update && apt-get install -y \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
     libfreetype6-dev \
-    libjpeg-dev \
+    libjpeg62-turbo-dev \
     libpng-dev \
     libicu-dev \
     libzip-dev \
@@ -24,8 +27,9 @@ RUN apt-get update && apt-get install -y \
     git \
     zip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd \
-    && docker-php-ext-install intl pdo_mysql zip
+    && docker-php-ext-install -j"$(nproc)" gd intl pdo_mysql zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /var/www/html
