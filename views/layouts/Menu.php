@@ -20,9 +20,9 @@ class Menu
                     'items' => [
                         ['label' => 'Players', 'url' => ['/player']],
                         ['label' => 'Buildings', 'url' => ['/player/player-building']],
+                        ['label' => 'Building Productions', 'url' => ['/player/player-building-production']],
                         ['label' => 'Inventories', 'url' => ['/player/player-inventory']],
                         ['label' => 'Inventory Items', 'url' => ['/player/player-inventory-item']],
-                        ['label' => 'Productions', 'url' => ['/player/player-building-production']],
                     ],
                 ],
                 [
@@ -41,7 +41,6 @@ class Menu
                         ['label' => 'Levels', 'url' => ['/building/building-level']],
                         ['label' => 'Construction Costs', 'url' => ['/building/building-construction-cost']],
                         ['label' => 'Production', 'url' => ['/building/building-production']],
-                        ['label' => 'Current Productions', 'url' => ['/building/building-current-production']],
                     ],
                 ],
                 [

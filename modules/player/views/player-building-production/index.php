@@ -1,8 +1,9 @@
 <?php
 
-use app\models\Item;
-use app\models\PlayerBuilding;
 use app\models\PlayerBuildingProduction;
+use app\models\BuildingProduction;
+use app\models\Player;
+use app\models\PlayerBuilding;
 use kartik\daterange\DateRangePicker;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -10,11 +11,12 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /** @var yii\web\View $this */
 /** @var app\models\PlayerBuildingProductionSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Player Building Productions';
+$this->title = 'Building Productions';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="player-building-production-index">
@@ -22,11 +24,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Player Building Production', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Building Production', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -37,32 +38,40 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::input('number', $searchModel->formName() . '[id]', $searchModel->id, ['class' => 'form-control']),
             ],
             [
+                'attribute' => 'player_id',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return $model->player
+                        ? Html::a($model->player->username . ' (ID: ' . $model->player_id . ')', ['/player/manage/view', 'id' => $model->player_id])
+                        : '(not set)';
+                },
+                'filter' => Html::input('number', $searchModel->formName() . '[player_id]', $searchModel->player_id, ['class' => 'form-control']),
+            ],
+            [
                 'attribute' => 'player_building_id',
                 'format' => 'raw',
                 'value' => function($model) {
                     return $model->playerBuilding
-                        ? Html::a($model->playerBuilding->building->name . ' (ID: ' . $model->player_building_id . ')', ['/player/player-building/view', 'id' => $model->player_building_id])
+                        ? Html::a(
+                            ($model->playerBuilding->building ? $model->playerBuilding->building->name : '?') . ' (ID: ' . $model->player_building_id . ')',
+                            ['/player/player-building/view', 'id' => $model->player_building_id]
+                          )
                         : '(not set)';
                 },
                 'filter' => Html::input('number', $searchModel->formName() . '[player_building_id]', $searchModel->player_building_id, ['class' => 'form-control']),
             ],
             [
-                'attribute' => 'item_id',
+                'attribute' => 'building_production_id',
                 'format' => 'raw',
                 'value' => function($model) {
-                    if (!$model->item) return '(not set)';
-                    $item = $model->item;
-                    $name = Html::a(Html::encode($item->name), ['/item/manage/view', 'id' => $item->id]);
-                    if (!$item->icon_url) return $name;
-                    $fullUrl = IMAGE_BASE_URL . $item->icon_url;
-                    return $name . ' ' . Html::a(Html::img($fullUrl, ['style' => 'max-width:50px;max-height:50px;']), $fullUrl);
+                    if (!$model->buildingProduction) {
+                        return '(not set)';
+                    }
+                    $bp = $model->buildingProduction;
+                    $label = ($bp->building ? $bp->building->name : '?') . ' → ' . ($bp->item ? $bp->item->name : '?') . ' (ID: ' . $model->building_production_id . ')';
+                    return Html::a($label, ['/building/building-production/view', 'id' => $model->building_production_id]);
                 },
-                'filter' => Html::dropDownList(
-                    $searchModel->formName() . '[item_id]',
-                    $searchModel->item_id,
-                    ArrayHelper::map(Item::find()->orderBy('name')->all(), 'id', 'name'),
-                    ['class' => 'form-control', 'prompt' => 'Select Item']
-                ),
+                'filter' => Html::input('number', $searchModel->formName() . '[building_production_id]', $searchModel->building_production_id, ['class' => 'form-control']),
             ],
             [
                 'attribute' => 'end_time',
@@ -83,6 +92,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]),
             ],
             [
+                'attribute' => 'status',
+                'filter' => Html::dropDownList(
+                    $searchModel->formName() . '[status]',
+                    $searchModel->status,
+                    PlayerBuildingProduction::statusOptions(),
+                    ['class' => 'form-control', 'prompt' => 'All']
+                ),
+            ],
+            [
                 'attribute' => 'created_at',
                 'format' => 'datetime',
                 'filter' => DateRangePicker::widget([
@@ -101,28 +119,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]),
             ],
             [
-                'attribute' => 'updated_at',
-                'format' => 'datetime',
-                'filter' => DateRangePicker::widget([
-                    'model' => $searchModel,
-                    'attribute' => 'updated_at_range',
-                    'convertFormat' => true,
-                    'pluginOptions' => [
-                        'timePicker' => true,
-                        'timePicker24Hour' => true,
-                        'timePickerIncrement' => 15,
-                        'locale' => [
-                            'format' => 'Y-m-d H:i',
-                            'separator' => ' - ',
-                        ],
-                    ],
-                ]),
-            ],
-            [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, PlayerBuildingProduction $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                },
             ],
         ],
     ]); ?>

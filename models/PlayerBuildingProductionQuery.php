@@ -9,11 +9,6 @@ namespace app\models;
  */
 class PlayerBuildingProductionQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
      * {@inheritdoc}
      * @return PlayerBuildingProduction[]|array

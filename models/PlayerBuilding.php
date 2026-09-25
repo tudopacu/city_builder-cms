@@ -111,13 +111,13 @@ class PlayerBuilding extends CoreModel
     }
 
     /**
-     * Gets query for [[BuildingCurrentProductions]].
+     * Gets query for [[PlayerBuildingProductions]].
      *
-     * @return \yii\db\ActiveQuery|BuildingCurrentProductionQuery
+     * @return \yii\db\ActiveQuery|PlayerBuildingProductionQuery
      */
-    public function getBuildingCurrentProductions()
+    public function getPlayerBuildingProductions()
     {
-        return $this->hasMany(BuildingCurrentProduction::class, ['player_building_id' => 'id']);
+        return $this->hasMany(PlayerBuildingProduction::class, ['player_building_id' => 'id']);
     }
 
     /**

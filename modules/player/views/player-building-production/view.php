@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var app\models\PlayerBuildingProduction $model */
 
-$this->title = 'Player Building Production #' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Player Building Productions', 'url' => ['index']];
+$this->title = 'Building Production #' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Building Productions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -31,26 +31,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             [
+                'attribute' => 'player_id',
+                'value' => $model->player ? $model->player->username . ' (ID: ' . $model->player_id . ')' : $model->player_id,
+            ],
+            [
                 'attribute' => 'player_building_id',
                 'value' => $model->playerBuilding
-                    ? ($model->playerBuilding->building ? $model->playerBuilding->building->name : 'N/A') . ' (ID: ' . $model->player_building_id . ')'
+                    ? ($model->playerBuilding->building ? $model->playerBuilding->building->name : '?') . ' (ID: ' . $model->player_building_id . ')'
                     : $model->player_building_id,
             ],
             [
-                'attribute' => 'item_id',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    if (!$model->item) return $model->item_id;
-                    $item = $model->item;
-                    $name = Html::a(Html::encode($item->name), ['/item/manage/view', 'id' => $item->id]);
-                    if (!$item->icon_url) return $name;
-                    $fullUrl = IMAGE_BASE_URL . $item->icon_url;
-                    return $name . ' ' . Html::a(Html::img($fullUrl, ['style' => 'max-width:50px;max-height:50px;']), $fullUrl);
-                },
+                'attribute' => 'building_production_id',
+                'value' => $model->buildingProduction
+                    ? ($model->buildingProduction->building ? $model->buildingProduction->building->name : '?')
+                      . ' → ' . ($model->buildingProduction->item ? $model->buildingProduction->item->name : '?')
+                      . ' (ID: ' . $model->building_production_id . ')'
+                    : $model->building_production_id,
             ],
-            'end_time',
-            'created_at',
-            'updated_at',
+            'end_time:datetime',
+            'status',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

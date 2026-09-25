@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\PlayerBuildingProduction $model */
 
-$this->title = 'Create Player Building Production';
-$this->params['breadcrumbs'][] = ['label' => 'Player Building Productions', 'url' => ['index']];
+$this->title = 'Create Building Production';
+$this->params['breadcrumbs'][] = ['label' => 'Building Productions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="player-building-production-create">
