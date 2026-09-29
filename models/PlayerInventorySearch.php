@@ -17,7 +17,7 @@ class PlayerInventorySearch extends PlayerInventory
     public function rules()
     {
         return [
-            [['id', 'player_id', 'player_building_id', 'capacity'], 'integer'],
+            [['id', 'player_id', 'player_building_id', 'map_id', 'capacity'], 'integer'],
             [['created_at', 'updated_at', 'created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
@@ -62,6 +62,7 @@ class PlayerInventorySearch extends PlayerInventory
             'id' => $this->id,
             'player_id' => $this->player_id,
             'player_building_id' => $this->player_building_id,
+            'map_id' => $this->map_id,
             'capacity' => $this->capacity,
         ]);
 

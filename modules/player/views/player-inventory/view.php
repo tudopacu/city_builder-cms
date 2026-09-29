@@ -43,6 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $m->player_building_id;
                 },
             ],
+            [
+                'attribute' => 'map_id',
+                'value' => $model->map ? $model->map->name : $model->map_id,
+            ],
             'capacity',
             'created_at',
             'updated_at',

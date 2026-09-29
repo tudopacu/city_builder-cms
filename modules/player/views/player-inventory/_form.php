@@ -2,6 +2,7 @@
 
 use app\models\PlayerBuilding;
 use app\models\Player;
+use app\models\Map;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
@@ -33,6 +34,11 @@ use yii\widgets\ActiveForm;
             }
         ),
         ['prompt' => 'Select Player Building (Storage only)']
+    ) ?>
+
+    <?= $form->field($model, 'map_id')->dropDownList(
+        ArrayHelper::map(Map::find()->orderBy('name')->all(), 'id', 'name'),
+        ['prompt' => 'Select Map']
     ) ?>
 
     <?= $form->field($model, 'capacity')->textInput(['type' => 'number', 'min' => 1]) ?>

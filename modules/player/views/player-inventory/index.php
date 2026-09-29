@@ -4,6 +4,7 @@ use app\models\Building;
 use app\models\Player;
 use app\models\PlayerBuilding;
 use app\models\PlayerInventory;
+use app\models\Map;
 use kartik\daterange\DateRangePicker;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -75,6 +76,21 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
                     ),
                     ['class' => 'form-control', 'prompt' => 'Select Building']
+                ),
+            ],
+            [
+                'attribute' => 'map_id',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return $model->map
+                        ? Html::a($model->map->name, ['/map/manage/view', 'id' => $model->map_id])
+                        : $model->map_id;
+                },
+                'filter' => Html::dropDownList(
+                    $searchModel->formName() . '[map_id]',
+                    $searchModel->map_id,
+                    ArrayHelper::map(Map::find()->orderBy('name')->all(), 'id', 'name'),
+                    ['class' => 'form-control', 'prompt' => 'Select Map']
                 ),
             ],
             [
