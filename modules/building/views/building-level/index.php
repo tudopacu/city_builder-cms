@@ -69,6 +69,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
+                'attribute' => 'capacity',
+                'filter' => Html::input('number', $searchModel->formName() . '[capacity]', $searchModel->capacity, ['class' => 'form-control']),
+            ],
+            [
                 'attribute' => 'created_at',
                 'format' => 'datetime',
                 'filter' => DateRangePicker::widget([

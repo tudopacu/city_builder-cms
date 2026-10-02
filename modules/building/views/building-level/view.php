@@ -43,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         Html::a(Html::img($fullUrl, ['style' => 'max-width:150px;max-height:150px;']), $fullUrl);
                 },
             ],
+            'capacity',
             'created_at',
             'updated_at',
         ],
