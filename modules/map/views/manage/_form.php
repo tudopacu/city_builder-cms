@@ -23,6 +23,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'length')->input('number') ?>
 
+    <?= $form->field($model, 'tile_x')->input('number', ['min' => 0, 'max' => 65535, 'step' => 1]) ?>
+
+    <?= $form->field($model, 'tile_y')->input('number', ['min' => 0, 'max' => 65535, 'step' => 1]) ?>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

@@ -53,6 +53,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::input('number', $searchModel->formName() . '[length]', $searchModel->id, ['class' => 'form-control']),
             ],
             [
+                'attribute' => 'tile_x',
+                'filter' => Html::input('number', $searchModel->formName() . '[tile_x]', $searchModel->tile_x, ['class' => 'form-control', 'min' => 0, 'max' => 65535, 'step' => 1]),
+            ],
+            [
+                'attribute' => 'tile_y',
+                'filter' => Html::input('number', $searchModel->formName() . '[tile_y]', $searchModel->tile_y, ['class' => 'form-control', 'min' => 0, 'max' => 65535, 'step' => 1]),
+            ],
+            [
                 'attribute' => 'created_at',
                 'format' => 'datetime',
                 'filter' => DateRangePicker::widget([

@@ -28,6 +28,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'length') ?>
 
+    <?= $form->field($model, 'tile_x')->input('number', ['min' => 0, 'max' => 65535, 'step' => 1]) ?>
+
+    <?= $form->field($model, 'tile_y')->input('number', ['min' => 0, 'max' => 65535, 'step' => 1]) ?>
+
     <?= $form->field($model, 'created_at') ?>
 
     <?php // echo $form->field($model, 'updated_at') ?>

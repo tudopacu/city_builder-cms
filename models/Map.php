@@ -10,6 +10,8 @@ namespace app\models;
  * @property string|null $image_url
  * @property int $width
  * @property int $length
+ * @property int $tile_x
+ * @property int $tile_y
  * @property int $created_at
  * @property int $updated_at
  *
@@ -32,8 +34,9 @@ class Map extends CoreModel
     public function rules()
     {
         return [
-            [['name', 'image_url', 'width', 'length'], 'required'],
+            [['name', 'image_url', 'width', 'length', 'tile_x', 'tile_y'], 'required'],
             [['width', 'length'], 'integer'],
+            [['tile_x', 'tile_y'], 'integer', 'min' => 0, 'max' => 65535],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'image_url'], 'string', 'max' => 255],
             [['name'], 'unique'],
@@ -51,6 +54,8 @@ class Map extends CoreModel
             'image_url' => 'Image Url',
             'width' => 'Width',
             'length' => 'Length',
+            'tile_x' => 'Tile X',
+            'tile_y' => 'Tile Y',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

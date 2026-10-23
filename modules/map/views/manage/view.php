@@ -43,6 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'width',
             'length',
+            'tile_x',
+            'tile_y',
             'created_at',
             'updated_at',
         ],

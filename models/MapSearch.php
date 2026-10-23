@@ -18,6 +18,7 @@ class MapSearch extends Map
     {
         return [
             [['id', 'width', 'length', 'created_at', 'updated_at'], 'integer'],
+            [['tile_x', 'tile_y'], 'integer', 'min' => 0, 'max' => 65535],
             [['name', 'image_url', 'created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
@@ -62,6 +63,8 @@ class MapSearch extends Map
             'id' => $this->id,
             'width' => $this->width,
             'length' => $this->length,
+            'tile_x' => $this->tile_x,
+            'tile_y' => $this->tile_y,
         ]);
 
         if (!empty($this->created_at_range)) {
