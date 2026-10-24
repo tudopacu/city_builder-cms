@@ -9,7 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use yii\helpers\FileHelper;
+use yii\helpers\Html;
 
 class SiteController extends Controller
 {
@@ -62,26 +62,31 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $absPath = Yii::getAlias('@webroot/assets/tup');
-        $relativeUrl = Yii::getAlias('@web/assets/tup');
-
+        $imageBaseUrl = rtrim(IMAGE_BASE_URL, '/');
+        // IMAGE_BASE_URL may already include /html (as in the local default).
+        $imageBaseUrl = preg_replace('~/html$~i', '', $imageBaseUrl);
+        $imageDirectoryUrl = $imageBaseUrl . '/html/images/tup';
+        $fileNames = [
+            'tup folosit.jpeg',
+            'tup intors.jpeg',
+            'tup mov.jpeg',
+            'tup roz.jpeg',
+            'tup 3d.jpeg',
+        ];
         $items = [];
 
-        if (is_dir($absPath)) {
-            $files = FileHelper::findFiles($absPath, [
-                'only' => ['*.jpg', '*.jpeg', '*.png', '*.gif', '*.webp'],
-                'recursive' => false,
-            ]);
-
-            foreach ($files as $file) {
-                $fileName = basename($file);
-                $items[] = [
-                    'content' => '<img src="' . $relativeUrl . '/' . $fileName . '" class="d-block w-100" style="height:800px; object-fit:cover;" />',
-                ];
-            }
+        foreach ($fileNames as $fileName) {
+            $imageUrl = $imageDirectoryUrl . '/' . rawurlencode($fileName);
+            $items[] = [
+                'content' => Html::img($imageUrl, [
+                    'alt' => pathinfo($fileName, PATHINFO_FILENAME),
+                    'class' => 'd-block w-100',
+                    'style' => 'height:800px; object-fit:cover;',
+                ]),
+            ];
         }
 
-        return $this->render('index', ['items' => $items, 'relativeUrl' => $relativeUrl]);
+        return $this->render('index', ['items' => $items, 'relativeUrl' => $imageDirectoryUrl]);
     }
 
     /**
