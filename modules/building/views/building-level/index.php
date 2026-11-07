@@ -73,6 +73,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::input('number', $searchModel->formName() . '[capacity]', $searchModel->capacity, ['class' => 'form-control']),
             ],
             [
+                'attribute' => 'population_capacity',
+                'filter' => Html::input('number', $searchModel->formName() . '[population_capacity]', $searchModel->population_capacity, ['class' => 'form-control']),
+            ],
+            [
+                'attribute' => 'population_cost',
+                'filter' => Html::input('number', $searchModel->formName() . '[population_cost]', $searchModel->population_cost, ['class' => 'form-control']),
+            ],
+            [
                 'attribute' => 'created_at',
                 'format' => 'datetime',
                 'filter' => DateRangePicker::widget([
