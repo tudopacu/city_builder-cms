@@ -13,6 +13,8 @@ use Yii;
  * @property int $build_time_seconds
  * @property string|null $image_url
  * @property int $capacity
+ * @property int $population_capacity Population this building provides while it exists (housing)
+ * @property int $population_cost Population this building uses while it exists
  *
  * @property Building $building
  */
@@ -37,6 +39,8 @@ class BuildingLevel extends CoreModel
             [['image_url'], 'default', 'value' => null],
             [['building_id', 'level', 'build_time_seconds', 'capacity'], 'required'],
             [['building_id', 'level', 'build_time_seconds', 'capacity'], 'integer'],
+            [['population_capacity', 'population_cost'], 'default', 'value' => 0],
+            [['population_capacity', 'population_cost'], 'integer', 'min' => 0],
             [['image_url'], 'string', 'max' => 255],
             [['building_id'], 'exist', 'skipOnError' => true, 'targetClass' => Building::class, 'targetAttribute' => ['building_id' => 'id']],
             [['created_at', 'updated_at'], 'safe'],
@@ -55,6 +59,8 @@ class BuildingLevel extends CoreModel
             'build_time_seconds' => 'Build Time in Seconds',
             'image_url' => 'Image Url',
             'capacity' => 'Capacity',
+            'population_capacity' => 'Population Provided (housing)',
+            'population_cost' => 'Population Used',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

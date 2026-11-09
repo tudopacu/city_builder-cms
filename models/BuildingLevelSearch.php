@@ -17,7 +17,7 @@ class BuildingLevelSearch extends BuildingLevel
     public function rules()
     {
         return [
-            [['id', 'building_id', 'level', 'build_time_seconds', 'capacity'], 'integer'],
+            [['id', 'building_id', 'level', 'build_time_seconds', 'capacity', 'population_capacity', 'population_cost'], 'integer'],
             [['image_url', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -64,6 +64,8 @@ class BuildingLevelSearch extends BuildingLevel
             'level' => $this->level,
             'build_time_seconds' => $this->build_time_seconds,
             'capacity' => $this->capacity,
+            'population_capacity' => $this->population_capacity,
+            'population_cost' => $this->population_cost,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
