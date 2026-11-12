@@ -44,6 +44,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             'capacity',
+            'population_capacity',
+            'population_cost',
             'created_at',
             'updated_at',
         ],
