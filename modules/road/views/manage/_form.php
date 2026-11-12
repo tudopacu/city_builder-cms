@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Age;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -17,6 +18,11 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'image_url')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'age_id')->dropDownList(
+        Age::getDropdownList(),
+        ['prompt' => 'Select an Age']
+    ) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

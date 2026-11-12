@@ -38,6 +38,9 @@ $config = [
         'road' => [
             'class' => 'app\modules\road\road',
         ],
+        'age' => [
+            'class' => 'app\modules\age\age',
+        ],
     ],
     'components' => [
         'request' => [

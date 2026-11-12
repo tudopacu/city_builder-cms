@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "buildings".
  *
  * @property int $id
+ * @property int $age_id
  * @property string $name
  * @property string $image_url
  * @property string|null $description
@@ -17,6 +18,7 @@ use Yii;
  * @property string|null $created_at
  * @property string|null $updated_at
  *
+ * @property Age $age
  * @property BuildingCategory $buildingCategory
  * @property BuildingLevel[] $buildingLevels
  * @property PlayerBuilding[] $playerBuildings
@@ -43,11 +45,12 @@ class Building extends CoreModel
     {
         return [
             [['image_url', 'description', 'updated_at'], 'default', 'value' => null],
-            [['name', 'width', 'length', 'building_category_id'], 'required'],
+            [['name', 'width', 'length', 'building_category_id', 'age_id'], 'required'],
             [['description'], 'string'],
-            [['width', 'length', 'building_category_id'], 'integer'],
+            [['width', 'length', 'building_category_id', 'age_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'image_url'], 'string', 'max' => 255],
+            [['age_id'], 'exist', 'skipOnError' => true, 'targetClass' => Age::class, 'targetAttribute' => ['age_id' => 'id']],
             [['building_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => BuildingCategory::class, 'targetAttribute' => ['building_category_id' => 'id']],
         ];
     }
@@ -65,9 +68,20 @@ class Building extends CoreModel
             'width' => 'Width',
             'length' => 'Length',
             'building_category_id' => 'Building Category ID',
+            'age_id' => 'Age',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * Gets query for [[Age]].
+     *
+     * @return \yii\db\ActiveQuery|AgeQuery
+     */
+    public function getAge()
+    {
+        return $this->hasOne(Age::class, ['id' => 'age_id']);
     }
 
     /**

@@ -42,6 +42,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         Html::a(Html::img($fullUrl, ['style' => 'max-width:150px;max-height:150px;']), $fullUrl);
                 },
             ],
+            [
+                'attribute' => 'age_id',
+                'value' => function ($model) {
+                    return $model->age->name ?? '(not set)';
+                },
+            ],
             'created_at:datetime',
             'updated_at:datetime',
         ],

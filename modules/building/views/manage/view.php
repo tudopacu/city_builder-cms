@@ -53,6 +53,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->buildingCategory->name ?? '(not set)';
                 },
             ],
+            [
+                'attribute' => 'age_id',
+                'value' => function ($model) {
+                    return $model->age->name ?? '(not set)';
+                },
+            ],
             'created_at',
             'updated_at',
         ],

@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Age;
 use app\models\BuildingCategory;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -27,6 +28,11 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'building_category_id')->dropDownList(
         ArrayHelper::map(BuildingCategory::find()->all(), 'id', 'name'),
         ['prompt' => 'Select a Category']
+    ) ?>
+
+    <?= $form->field($model, 'age_id')->dropDownList(
+        Age::getDropdownList(),
+        ['prompt' => 'Select an Age']
     ) ?>
 
     <div class="form-group">

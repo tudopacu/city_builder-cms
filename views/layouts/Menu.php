@@ -60,6 +60,7 @@ class Menu
                         ['label' => 'Intersections', 'url' => ['/road/intersection']],
                     ],
                 ],
+                ['label' => 'Ages', 'url' => ['/age']],
                 ['label' => 'Redis', 'url' => ['/redis']],
             ];
         }

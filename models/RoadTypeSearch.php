@@ -16,7 +16,7 @@ class RoadTypeSearch extends RoadType
     public function rules()
     {
         return [
-            [['id'], 'integer'],
+            [['id', 'age_id'], 'integer'],
             [['type', 'name', 'image_url', 'created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
@@ -54,6 +54,7 @@ class RoadTypeSearch extends RoadType
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'age_id' => $this->age_id,
         ]);
 
         if (!empty($this->created_at_range) && strpos($this->created_at_range, ' - ') !== false) {

@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Age;
 use kartik\daterange\DateRangePicker;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -41,6 +42,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     $fullUrl = IMAGE_BASE_URL . $model->image_url;
                     return Html::a($model->image_url, $fullUrl) . ' ' .
                         Html::a(Html::img($fullUrl, ['style' => 'max-width:150px;max-height:150px;']), $fullUrl);
+                },
+            ],
+            [
+                'attribute' => 'age_id',
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'age_id',
+                    Age::getDropdownList(),
+                    ['class' => 'form-control', 'prompt' => 'All']
+                ),
+                'value' => function ($model) {
+                    return $model->age->name ?? '(not set)';
                 },
             ],
             [

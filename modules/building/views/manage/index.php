@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Age;
 use app\models\Building;
 use app\models\BuildingCategory;
 use kartik\daterange\DateRangePicker;
@@ -67,6 +68,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Building Category',
                 'value' => function ($model) {
                     return $model->buildingCategory->name ?? '(not set)';
+                },
+            ],
+            [
+                'attribute' => 'age_id',
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'age_id',
+                    Age::getDropdownList(),
+                    ['class' => 'form-control', 'prompt' => 'All']
+                ),
+                'value' => function ($model) {
+                    return $model->age->name ?? '(not set)';
                 },
             ],
             [

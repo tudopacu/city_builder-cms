@@ -44,6 +44,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             'is_tradeable:boolean',
+            [
+                'attribute' => 'age_id',
+                'value' => function ($model) {
+                    return $model->age->name ?? '(not set)';
+                },
+            ],
             'created_at:datetime',
             'updated_at:datetime',
         ],

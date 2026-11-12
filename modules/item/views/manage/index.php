@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Age;
 use app\models\Item;
 use kartik\daterange\DateRangePicker;
 use yii\helpers\Html;
@@ -52,6 +53,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'is_tradeable',
                 'format' => 'boolean',
                 'filter' => Html::activeDropDownList($searchModel, 'is_tradeable', [1 => 'Yes', 0 => 'No'], ['class' => 'form-control', 'prompt' => 'All']),
+            ],
+            [
+                'attribute' => 'age_id',
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'age_id',
+                    Age::getDropdownList(),
+                    ['class' => 'form-control', 'prompt' => 'All']
+                ),
+                'value' => function ($model) {
+                    return $model->age->name ?? '(not set)';
+                },
             ],
             [
                 'attribute' => 'created_at',

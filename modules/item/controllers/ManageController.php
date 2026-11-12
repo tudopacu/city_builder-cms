@@ -114,6 +114,7 @@ class ManageController extends BaseController
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        $this->deleteRedisKeysByPrefix('item');
 
         return $this->redirect(['index']);
     }

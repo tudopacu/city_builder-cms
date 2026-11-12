@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "items".
  *
  * @property int $id
+ * @property int $age_id
  * @property string $name
  * @property string|null $description
  * @property string $type
@@ -16,6 +17,7 @@ use Yii;
  * @property string|null $created_at
  * @property string|null $updated_at
  *
+ * @property Age $age
  * @property ItemRecipe $itemRecipe
  * @property ItemRecipe[] $itemRecipesAsOutput
  * @property ItemRecipeInput[] $itemRecipeInputs
@@ -44,13 +46,15 @@ class Item extends CoreModel
     {
         return [
             [['icon_url', 'description', 'updated_at'], 'default', 'value' => null],
-            [['name', 'type'], 'required'],
+            [['name', 'type', 'age_id'], 'required'],
+            [['age_id'], 'integer'],
             [['description'], 'string'],
             [['is_tradeable'], 'boolean'],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'icon_url'], 'string', 'max' => 255],
             [['type'], 'string', 'max' => 50],
             [['type'], 'in', 'range' => array_keys(self::ITEM_TYPES)],
+            [['age_id'], 'exist', 'skipOnError' => true, 'targetClass' => Age::class, 'targetAttribute' => ['age_id' => 'id']],
         ];
     }
 
@@ -66,9 +70,20 @@ class Item extends CoreModel
             'type' => 'Type',
             'icon_url' => 'Icon URL',
             'is_tradeable' => 'Is Tradeable',
+            'age_id' => 'Age',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * Gets query for [[Age]].
+     *
+     * @return \yii\db\ActiveQuery|AgeQuery
+     */
+    public function getAge()
+    {
+        return $this->hasOne(Age::class, ['id' => 'age_id']);
     }
 
     /**

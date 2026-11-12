@@ -17,7 +17,7 @@ class BuildingSearch extends Building
     public function rules()
     {
         return [
-            [['id', 'width', 'length', 'building_category_id', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'width', 'length', 'building_category_id', 'age_id', 'created_at', 'updated_at'], 'integer'],
             [['name', 'image_url', 'description', 'created_at_range', 'updated_at_range'], 'safe'],
         ];
     }
@@ -63,17 +63,18 @@ class BuildingSearch extends Building
             'width' => $this->width,
             'length' => $this->length,
             'building_category_id' => $this->building_category_id,
+            'age_id' => $this->age_id,
         ]);
 
-        if (!empty($this->created_at_range)) {
-            [$start, $end] = explode(' - ', $this->created_at_range);
+        if (!empty($this->created_at_range) && strpos($this->created_at_range, ' - ') !== false) {
+            [$start, $end] = explode(' - ', $this->created_at_range, 2);
             $start = date('Y-m-d H:i:s', strtotime($start));
             $end   = date('Y-m-d H:i:s', strtotime($end));
             $query->andFilterWhere(['between', 'created_at', $start, $end]);
         }
 
-        if (!empty($this->updated_at_range)) {
-            [$start, $end] = explode(' - ', $this->updated_at_range);
+        if (!empty($this->updated_at_range) && strpos($this->updated_at_range, ' - ') !== false) {
+            [$start, $end] = explode(' - ', $this->updated_at_range, 2);
             $start = date('Y-m-d H:i:s', strtotime($start));
             $end   = date('Y-m-d H:i:s', strtotime($end));
             $query->andFilterWhere(['between', 'updated_at', $start, $end]);
