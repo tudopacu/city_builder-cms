@@ -7,6 +7,7 @@ use app\models\Age;
 use app\models\AgeSearch;
 use Yii;
 use yii\db\IntegrityException;
+use yii\helpers\Html;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -121,7 +122,7 @@ class ManageController extends BaseController
         try {
             $model->delete();
         } catch (IntegrityException $e) {
-            Yii::$app->session->setFlash('error', 'Age "' . $model->name . '" is still used by buildings, items or road types. Reassign them before deleting it.');
+            Yii::$app->session->setFlash('error', 'Age "' . Html::encode($model->name) . '" is still used by buildings, items or road types. Reassign them before deleting it.');
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
